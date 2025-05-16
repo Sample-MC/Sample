@@ -23,7 +23,7 @@
 <h2>EMERGENCY MEDICAL CARD</h2>
 
 <button id="scanBtn">Scan QR Code</button>
-<video id="video" autoplay></video>
+<video id="video" autoplay muted playsinline></video>
 <p id="msg"></p>
 
 <div id="card" style="display:none;">
@@ -53,6 +53,8 @@
   const videoElem = document.getElementById('video');
   const msg = document.getElementById('msg');
   const card = document.getElementById('card');
+
+  let html5QrCode = null;
 
   function showCard(data) {
     try {
@@ -84,4 +86,36 @@
     }
   }
 
-  // Show card
+  scanBtn.addEventListener('click', () => {
+    card.style.display = 'none';
+    msg.textContent = '';
+    videoElem.style.display = 'block';
+
+    if (!html5QrCode) {
+      html5QrCode = new Html5Qrcode("video");
+    }
+
+    html5QrCode.start(
+      { facingMode: "environment" },
+      {
+        fps: 10,
+        qrbox: 250
+      },
+      qrCodeMessage => {
+        html5QrCode.stop().then(() => {
+          showCard(qrCodeMessage);
+        }).catch(err => {
+          msg.textContent = 'Failed to stop scanning: ' + err;
+        });
+      },
+      errorMessage => {
+        // You can log scan errors here if you want
+      }
+    ).catch(err => {
+      msg.textContent = 'Unable to start scanning: ' + err;
+    });
+  });
+</script>
+
+</body>
+</html>
