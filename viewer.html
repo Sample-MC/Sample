@@ -17,36 +17,35 @@
       padding: 20px;
       border: 2px solid #ccc;
       border-radius: 10px;
-    }
-    .logo {
-      width: 150px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
     }
     .header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
     }
+    .logo {
+      width: 150px;
+    }
     .photo {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border: 2px solid #aaa;
       object-fit: cover;
       border-radius: 4px;
     }
     .title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       background: red;
       color: white;
       padding: 5px 10px;
       text-align: center;
       border-radius: 5px;
-      margin: 10px 0;
+      margin: 10px 0 20px 0;
     }
-    .section-title {
-      font-weight: bold;
-      margin-top: 15px;
-      text-decoration: underline;
+    .section {
+      margin-bottom: 10px;
     }
     table {
       width: 100%;
@@ -57,6 +56,7 @@
       border: 1px solid #ddd;
       padding: 6px;
       text-align: left;
+      font-size: 14px;
     }
     .quote {
       background: #e0f7e9;
@@ -76,9 +76,9 @@
 
     <div class="title">EMERGENCY MEDICAL CARD</div>
 
-    <div><strong>Name:</strong> <span id="name"></span> <span id="designation" style="font-style: italic;"></span></div>
-    <div><strong>Company Name:</strong> <span id="company"></span></div>
-    <div><strong>Street Address:</strong> <span id="address"></span></div>
+    <div class="section"><strong>Name:</strong> <span id="name"></span> <span id="designation" style="font-style: italic;"></span></div>
+    <div class="section"><strong>Company Name:</strong> <span id="company"></span></div>
+    <div class="section"><strong>Street Address:</strong> <span id="address"></span></div>
 
     <table>
       <tr>
@@ -118,7 +118,7 @@
     const data = JSON.parse(decodeURIComponent(location.hash.substring(1)));
 
     document.getElementById('name').textContent = data.name || "";
-    document.getElementById('designation').textContent = `(${data.designation || ""})`;
+    document.getElementById('designation').textContent = data.designation ? `(${data.designation})` : "";
     document.getElementById('company').textContent = data.company || "";
     document.getElementById('address').textContent = data.address || "";
     document.getElementById('eid').textContent = data.eid || "";
@@ -135,11 +135,8 @@
     document.getElementById('blood_sugar').textContent = data.blood_sugar || "";
     document.getElementById('blood_pressure').textContent = data.blood_pressure || "";
 
-    // Optional: show a photo if you include a URL in your data
     if (data.photo) {
       document.getElementById('photo').src = data.photo;
-    } else {
-      document.getElementById('photo').style.display = "none";
     }
   </script>
 </body>
