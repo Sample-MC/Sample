@@ -12,7 +12,7 @@
     }
     .card {
       background: white;
-      max-width: 600px;
+      max-width: 650px;
       margin: auto;
       padding: 20px;
       border: 2px solid #ccc;
@@ -28,8 +28,8 @@
       width: 150px;
     }
     .photo {
-      width: 70px;
-      height: 70px;
+      width: 80px;
+      height: 80px;
       border: 2px solid #aaa;
       object-fit: cover;
       border-radius: 4px;
@@ -42,7 +42,7 @@
       padding: 5px 10px;
       text-align: center;
       border-radius: 5px;
-      margin: 10px 0 20px 0;
+      margin: 15px 0 20px 0;
     }
     .section {
       margin-bottom: 10px;
@@ -50,13 +50,18 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 10px;
+      margin: 15px 0;
     }
-    td, th {
-      border: 1px solid #ddd;
-      padding: 6px;
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+      padding: 8px;
+      border: 1px solid #ccc;
       text-align: left;
-      font-size: 14px;
+    }
+    td {
+      padding: 8px;
+      border: 1px solid #ccc;
     }
     .quote {
       background: #e0f7e9;
@@ -82,30 +87,53 @@
 
     <table>
       <tr>
-        <td><strong>EID No</strong><br><span id="eid"></span></td>
-        <td><strong>Gender</strong><br><span id="gender"></span></td>
-        <td><strong>Age</strong><br><span id="age"></span></td>
+        <th>EID No</th>
+        <th>Gender</th>
+        <th>Age</th>
       </tr>
       <tr>
-        <td><strong>Nationality</strong><br><span id="nationality"></span></td>
-        <td><strong>DOB</strong><br><span id="dob"></span></td>
-        <td><strong>Contact No</strong><br><span id="contact"></span></td>
+        <td id="eid"></td>
+        <td id="gender"></td>
+        <td id="age"></td>
       </tr>
       <tr>
-        <td colspan="3"><strong>Relation Person No</strong><br><span id="relation"></span></td>
+        <th>Nationality</th>
+        <th>DOB</th>
+        <th>Contact No</th>
+      </tr>
+      <tr>
+        <td id="nationality"></td>
+        <td id="dob"></td>
+        <td id="contact"></td>
+      </tr>
+      <tr>
+        <th colspan="3">Relation Person</th>
+      </tr>
+      <tr>
+        <td colspan="3" id="relation"></td>
       </tr>
     </table>
 
     <table>
       <tr>
-        <td><strong>Blood Group</strong><br><span id="blood_group"></span></td>
-        <td><strong>Height</strong><br><span id="height"></span></td>
-        <td><strong>Weight</strong><br><span id="weight"></span></td>
+        <th>Blood Group</th>
+        <th>Height</th>
+        <th>Weight</th>
       </tr>
       <tr>
-        <td><strong>Waist Size</strong><br><span id="waist_size"></span></td>
-        <td><strong>Blood Sugar</strong><br><span id="blood_sugar"></span></td>
-        <td><strong>Blood Pressure</strong><br><span id="blood_pressure"></span></td>
+        <td id="blood_group"></td>
+        <td id="height"></td>
+        <td id="weight"></td>
+      </tr>
+      <tr>
+        <th>Waist Size</th>
+        <th>Blood Sugar</th>
+        <th>Blood Pressure</th>
+      </tr>
+      <tr>
+        <td id="waist_size"></td>
+        <td id="blood_sugar"></td>
+        <td id="blood_pressure"></td>
       </tr>
     </table>
 
