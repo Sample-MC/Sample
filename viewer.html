@@ -7,103 +7,139 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f7f9fb;
+      background: #f4f6f9;
       padding: 20px;
     }
     .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
+      background: white;
       max-width: 600px;
       margin: auto;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+    .logo {
+      width: 150px;
     }
     .header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
     }
-    .logo {
-      width: 120px;
+    .photo {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #aaa;
+      object-fit: cover;
+      border-radius: 4px;
     }
     .title {
-      text-align: center;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: bold;
-      color: red;
+      background: red;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    .section-title {
+      font-weight: bold;
+      margin-top: 15px;
+      text-decoration: underline;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
       margin-top: 10px;
-      margin-bottom: 20px;
     }
-    .section {
-      margin-bottom: 10px;
-    }
-    .section strong {
-      width: 150px;
-      display: inline-block;
-    }
-    .row {
-      display: flex;
-      justify-content: space-between;
+    td, th {
+      border: 1px solid #ddd;
+      padding: 6px;
+      text-align: left;
     }
     .quote {
-      margin-top: 20px;
-      background: #e7f4e4;
+      background: #e0f7e9;
       padding: 10px;
-      border-left: 5px solid green;
+      margin-top: 20px;
       font-style: italic;
+      border-left: 5px solid #00b060;
     }
   </style>
 </head>
 <body>
-  <div class="card" id="card">
+  <div class="card">
     <div class="header">
-      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Fujitec Logo" class="logo"/>
-      <div>
-        <div class="title">EMERGENCY MEDICAL CARD</div>
-      </div>
+      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Fujitec Logo" class="logo">
+      <img id="photo" src="https://raw.githubusercontent.com/Sample-MC/Sample/main/sample.jpg" alt="Photo" class="photo">
     </div>
-    <div id="info"></div>
+
+    <div class="title">EMERGENCY MEDICAL CARD</div>
+
+    <div><strong>Name:</strong> <span id="name"></span> <span id="designation" style="font-style: italic;"></span></div>
+    <div><strong>Company Name:</strong> <span id="company"></span></div>
+    <div><strong>Street Address:</strong> <span id="address"></span></div>
+
+    <table>
+      <tr>
+        <td><strong>EID No</strong><br><span id="eid"></span></td>
+        <td><strong>Gender</strong><br><span id="gender"></span></td>
+        <td><strong>Age</strong><br><span id="age"></span></td>
+      </tr>
+      <tr>
+        <td><strong>Nationality</strong><br><span id="nationality"></span></td>
+        <td><strong>DOB</strong><br><span id="dob"></span></td>
+        <td><strong>Contact No</strong><br><span id="contact"></span></td>
+      </tr>
+      <tr>
+        <td colspan="3"><strong>Relation Person No</strong><br><span id="relation"></span></td>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <td><strong>Blood Group</strong><br><span id="blood_group"></span></td>
+        <td><strong>Height</strong><br><span id="height"></span></td>
+        <td><strong>Weight</strong><br><span id="weight"></span></td>
+      </tr>
+      <tr>
+        <td><strong>Waist Size</strong><br><span id="waist_size"></span></td>
+        <td><strong>Blood Sugar</strong><br><span id="blood_sugar"></span></td>
+        <td><strong>Blood Pressure</strong><br><span id="blood_pressure"></span></td>
+      </tr>
+    </table>
+
     <div class="quote">
       Creating a mentally healthy workplace begins with recognizing everyone’s struggle, even if it’s not visible.
     </div>
   </div>
 
   <script>
-    const hash = decodeURIComponent(window.location.hash.substring(1));
-    try {
-      const data = JSON.parse(hash);
-      const infoDiv = document.getElementById("info");
-      infoDiv.innerHTML = `
-        <div class="section"><strong>Name:</strong> ${data.name} <em>(${data.designation})</em></div>
-        <div class="section"><strong>Company:</strong> ${data.company}</div>
-        <div class="section"><strong>Address:</strong> ${data.address}</div>
-        <div class="row">
-          <div class="section"><strong>EID No:</strong> ${data.eid}</div>
-          <div class="section"><strong>Gender:</strong> ${data.gender}</div>
-          <div class="section"><strong>Age:</strong> ${data.age}</div>
-        </div>
-        <div class="row">
-          <div class="section"><strong>Nationality:</strong> ${data.nationality}</div>
-          <div class="section"><strong>DOB:</strong> ${data.dob}</div>
-        </div>
-        <div class="row">
-          <div class="section"><strong>Contact:</strong> ${data.contact}</div>
-          <div class="section"><strong>Emergency:</strong> ${data.relation_name} (${data.relation_phone})</div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="section"><strong>Blood Group:</strong> ${data.blood_group}</div>
-          <div class="section"><strong>Height:</strong> ${data.height}</div>
-          <div class="section"><strong>Weight:</strong> ${data.weight}</div>
-          <div class="section"><strong>Waist:</strong> ${data.waist_size}</div>
-        </div>
-        <div class="row">
-          <div class="section"><strong>Blood Sugar:</strong> ${data.blood_sugar}</div>
-          <div class="section"><strong>BP:</strong> ${data.blood_pressure}</div>
-        </div>
-      `;
-    } catch (e) {
-      document.getElementById("info").innerHTML = "<p>Invalid or missing data.</p>";
+    const data = JSON.parse(decodeURIComponent(location.hash.substring(1)));
+
+    document.getElementById('name').textContent = data.name || "";
+    document.getElementById('designation').textContent = `(${data.designation || ""})`;
+    document.getElementById('company').textContent = data.company || "";
+    document.getElementById('address').textContent = data.address || "";
+    document.getElementById('eid').textContent = data.eid || "";
+    document.getElementById('gender').textContent = data.gender || "";
+    document.getElementById('age').textContent = data.age || "";
+    document.getElementById('nationality').textContent = data.nationality || "";
+    document.getElementById('dob').textContent = data.dob || "";
+    document.getElementById('contact').textContent = data.contact || "";
+    document.getElementById('relation').textContent = `${data.relation_name || ""} (${data.relation_phone || ""})`;
+    document.getElementById('blood_group').textContent = data.blood_group || "";
+    document.getElementById('height').textContent = data.height || "";
+    document.getElementById('weight').textContent = data.weight || "";
+    document.getElementById('waist_size').textContent = data.waist_size || "";
+    document.getElementById('blood_sugar').textContent = data.blood_sugar || "";
+    document.getElementById('blood_pressure').textContent = data.blood_pressure || "";
+
+    // Optional: show a photo if you include a URL in your data
+    if (data.photo) {
+      document.getElementById('photo').src = data.photo;
+    } else {
+      document.getElementById('photo').style.display = "none";
     }
   </script>
 </body>
