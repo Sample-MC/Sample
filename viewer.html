@@ -12,12 +12,12 @@
     }
     .card {
       background: white;
-      max-width: 650px;
+      max-width: 700px;
       margin: auto;
       padding: 20px;
       border: 2px solid #ccc;
       border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     .header {
       display: flex;
@@ -44,24 +44,22 @@
       border-radius: 5px;
       margin: 15px 0 20px 0;
     }
-    .section {
-      margin-bottom: 10px;
-    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 15px 0;
+      margin-top: 10px;
     }
     th {
-      background-color: #f0f0f0;
+      background-color: #e6f0fb;
+      color: #003366;
       font-weight: bold;
       padding: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid #a3c2e2;
       text-align: left;
     }
     td {
       padding: 8px;
-      border: 1px solid #ccc;
+      border: 1px solid #a3c2e2;
     }
     .quote {
       background: #e0f7e9;
@@ -81,10 +79,27 @@
 
     <div class="title">EMERGENCY MEDICAL CARD</div>
 
-    <div class="section"><strong>Name:</strong> <span id="name"></span> <span id="designation" style="font-style: italic;"></span></div>
-    <div class="section"><strong>Company Name:</strong> <span id="company"></span></div>
-    <div class="section"><strong>Street Address:</strong> <span id="address"></span></div>
+    <!-- Identity Section -->
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Designation</th>
+        <th>Company Name</th>
+      </tr>
+      <tr>
+        <td id="name"></td>
+        <td id="designation"></td>
+        <td id="company"></td>
+      </tr>
+      <tr>
+        <th colspan="3">Street Address</th>
+      </tr>
+      <tr>
+        <td colspan="3" id="address"></td>
+      </tr>
+    </table>
 
+    <!-- General Info -->
     <table>
       <tr>
         <th>EID No</th>
@@ -114,6 +129,7 @@
       </tr>
     </table>
 
+    <!-- Medical Info -->
     <table>
       <tr>
         <th>Blood Group</th>
@@ -137,6 +153,7 @@
       </tr>
     </table>
 
+    <!-- Footer Quote -->
     <div class="quote">
       Creating a mentally healthy workplace begins with recognizing everyone’s struggle, even if it’s not visible.
     </div>
@@ -146,7 +163,7 @@
     const data = JSON.parse(decodeURIComponent(location.hash.substring(1)));
 
     document.getElementById('name').textContent = data.name || "";
-    document.getElementById('designation').textContent = data.designation ? `(${data.designation})` : "";
+    document.getElementById('designation').textContent = data.designation || "";
     document.getElementById('company').textContent = data.company || "";
     document.getElementById('address').textContent = data.address || "";
     document.getElementById('eid').textContent = data.eid || "";
