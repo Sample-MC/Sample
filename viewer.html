@@ -2,82 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Emergency Medical Card Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emergency Medical Card</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #fff; margin: 0; padding: 20px; }
-    #card { max-width: 400px; margin: auto; padding: 15px; border: 1px solid #000; background: #fff; }
-    h2 { color: red; text-align: center; border: 2px solid red; padding: 5px; }
-    .row { display: flex; justify-content: space-between; align-items: center; }
-    .label { font-weight: bold; }
-    img#photo { width: 60px; height: 70px; object-fit: cover; border: 1px solid #000; float: right; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-    td { border: 1px solid #ddd; padding: 6px; }
-    td.label { width: 35%; background: #f0f0f0; font-weight: bold; }
-    #footer { margin-top: 10px; font-size: 12px; text-align: center; padding: 10px; background: #d4f1e4; border-radius: 6px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fb;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      width: 120px;
+    }
+    .title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: red;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    .section {
+      margin-bottom: 10px;
+    }
+    .section strong {
+      width: 150px;
+      display: inline-block;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .quote {
+      margin-top: 20px;
+      background: #e7f4e4;
+      padding: 10px;
+      border-left: 5px solid green;
+      font-style: italic;
+    }
   </style>
 </head>
 <body>
-  <div id="card">
-    <h2>EMERGENCY MEDICAL CARD</h2>
-    <div class="row">
+  <div class="card" id="card">
+    <div class="header">
+      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Fujitec Logo" class="logo"/>
       <div>
-        <div><strong>NAME:</strong> <span id="name"></span> <span id="designation" style="font-size: 12px; border: 1px solid gray; padding: 1px 4px; border-radius: 4px;"></span></div>
+        <div class="title">EMERGENCY MEDICAL CARD</div>
       </div>
-      <img id="photo" src="" alt="Photo" onerror="this.style.display='none'" />
     </div>
-    <div style="margin-top:10px;">
-      <div><span class="label">Company Name:</span> <span id="company"></span></div>
-      <div><span class="label">Street Address:</span> <span id="address"></span></div>
-      <div><span class="label">EID No:</span> <span id="eid"></span> <span style="float:right;"><span class="label">Gender:</span> <span id="gender"></span> | <span class="label">Age:</span> <span id="age"></span></span></div>
-      <div><span class="label">Nationality:</span> <span id="nationality"></span> <span style="float:right;"><span class="label">DOB:</span> <span id="dob"></span></span></div>
-      <div><span class="label">Contact No:</span> <span id="contact"></span> <span style="float:right;"><span class="label">Relation Person No:</span> <span id="relation_phone"></span></span></div>
-    </div>
-
-    <table>
-      <tr><td class="label">Blood Group</td><td id="blood_group"></td></tr>
-      <tr><td class="label">Height</td><td id="height"></td></tr>
-      <tr><td class="label">Weight</td><td id="weight"></td></tr>
-      <tr><td class="label">Waist Size</td><td id="waist_size"></td></tr>
-      <tr><td class="label">Blood Sugar</td><td id="blood_sugar"></td></tr>
-      <tr><td class="label">Blood Pressure</td><td id="blood_pressure"></td></tr>
-    </table>
-
-    <div id="footer">
-      Creating a mentally healthy workplace begins with recognizing everyone's struggle,<br />even if it’s not visible.
+    <div id="info"></div>
+    <div class="quote">
+      Creating a mentally healthy workplace begins with recognizing everyone’s struggle, even if it’s not visible.
     </div>
   </div>
 
   <script>
-    function loadCardFromHash() {
-      const hash = decodeURIComponent(location.hash.substring(1));
-      if (!hash) return;
-      try {
-        const data = JSON.parse(hash);
-        document.getElementById("name").textContent = data.name || "";
-        document.getElementById("designation").textContent = data.designation || "";
-        document.getElementById("company").textContent = data.company || "";
-        document.getElementById("address").textContent = data.address || "";
-        document.getElementById("eid").textContent = data.eid || "";
-        document.getElementById("gender").textContent = data.gender || "";
-        document.getElementById("age").textContent = data.age || "";
-        document.getElementById("dob").textContent = data.dob || "";
-        document.getElementById("nationality").textContent = data.nationality || "";
-        document.getElementById("contact").textContent = data.contact || "";
-        document.getElementById("relation_phone").textContent = data.relation_phone || "";
-        document.getElementById("blood_group").textContent = data.blood_group || "";
-        document.getElementById("height").textContent = data.height || "";
-        document.getElementById("weight").textContent = data.weight || "";
-        document.getElementById("waist_size").textContent = data.waist_size || "";
-        document.getElementById("blood_sugar").textContent = data.blood_sugar || "";
-        document.getElementById("blood_pressure").textContent = data.blood_pressure || "";
-        document.getElementById("photo").src = data.photo || "";
-      } catch (e) {
-        document.getElementById("card").innerHTML = "<p style='color:red;'>Invalid QR data</p>";
-      }
+    const hash = decodeURIComponent(window.location.hash.substring(1));
+    try {
+      const data = JSON.parse(hash);
+      const infoDiv = document.getElementById("info");
+      infoDiv.innerHTML = `
+        <div class="section"><strong>Name:</strong> ${data.name} <em>(${data.designation})</em></div>
+        <div class="section"><strong>Company:</strong> ${data.company}</div>
+        <div class="section"><strong>Address:</strong> ${data.address}</div>
+        <div class="row">
+          <div class="section"><strong>EID No:</strong> ${data.eid}</div>
+          <div class="section"><strong>Gender:</strong> ${data.gender}</div>
+          <div class="section"><strong>Age:</strong> ${data.age}</div>
+        </div>
+        <div class="row">
+          <div class="section"><strong>Nationality:</strong> ${data.nationality}</div>
+          <div class="section"><strong>DOB:</strong> ${data.dob}</div>
+        </div>
+        <div class="row">
+          <div class="section"><strong>Contact:</strong> ${data.contact}</div>
+          <div class="section"><strong>Emergency:</strong> ${data.relation_name} (${data.relation_phone})</div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="section"><strong>Blood Group:</strong> ${data.blood_group}</div>
+          <div class="section"><strong>Height:</strong> ${data.height}</div>
+          <div class="section"><strong>Weight:</strong> ${data.weight}</div>
+          <div class="section"><strong>Waist:</strong> ${data.waist_size}</div>
+        </div>
+        <div class="row">
+          <div class="section"><strong>Blood Sugar:</strong> ${data.blood_sugar}</div>
+          <div class="section"><strong>BP:</strong> ${data.blood_pressure}</div>
+        </div>
+      `;
+    } catch (e) {
+      document.getElementById("info").innerHTML = "<p>Invalid or missing data.</p>";
     }
-
-    window.onload = loadCardFromHash;
   </script>
 </body>
 </html>
