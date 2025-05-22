@@ -15,12 +15,11 @@
       max-width: 600px;
       margin: auto;
       padding: 20px;
-      border: 2px solid #2980b9;
+      border: 2px solid #1e90ff;
       border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     }
     .logo {
-      width: 130px;
+      width: 150px;
     }
     .header {
       display: flex;
@@ -39,29 +38,28 @@
       font-weight: bold;
       background: red;
       color: white;
-      padding: 6px 12px;
+      padding: 5px 10px;
       text-align: center;
       border-radius: 5px;
-      margin: 15px 0;
+      margin: 10px 0;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 12px;
+      margin-top: 10px;
     }
-    th, td {
+    td, th {
       border: 1px solid #ccc;
-      padding: 6px 8px;
+      padding: 8px;
       text-align: left;
     }
     th {
-      background: #ecf0f1;
+      background-color: #e6f0ff;
       font-weight: bold;
-      color: #2c3e50;
     }
     .quote {
       background: #e0f7e9;
-      padding: 12px;
+      padding: 10px;
       margin-top: 20px;
       font-style: italic;
       border-left: 5px solid #00b060;
@@ -71,70 +69,48 @@
 <body>
   <div class="card">
     <div class="header">
-      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Fujitec Logo" class="logo">
-      <img id="photo" src="" alt="Photo" class="photo">
+      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" class="logo" alt="Fujitec Logo" />
+      <img id="photo" src="" class="photo" alt="Photo" />
     </div>
 
     <div class="title">EMERGENCY MEDICAL CARD</div>
 
     <table>
+      <tr><th>Name</th><td id="name"></td></tr>
+      <tr><th>Designation</th><td id="designation"></td></tr>
+      <tr><th>Company</th><td id="company"></td></tr>
+      <tr><th>Address</th><td id="address"></td></tr>
+    </table>
+
+    <table>
       <tr>
-        <th>Name</th>
-        <td id="name"></td>
+        <th>EID No</th><td id="eid"></td>
+        <th>Gender</th><td id="gender"></td>
+        <th>Age</th><td id="age"></td>
       </tr>
       <tr>
-        <th>Designation</th>
-        <td id="designation"></td>
+        <th>Nationality</th><td id="nationality"></td>
+        <th>DOB</th><td id="dob"></td>
+        <th>Contact No</th><td id="contact"></td>
       </tr>
       <tr>
-        <th>Company Name</th>
-        <td id="company"></td>
-      </tr>
-      <tr>
-        <th>Street Address</th>
-        <td id="address"></td>
+        <th colspan="1">Emergency Contact</th>
+        <td colspan="3" id="relation"></td>
       </tr>
     </table>
 
     <table>
       <tr>
-        <th>EID No</th>
-        <td id="eid"></td>
-        <th>Gender</th>
-        <td id="gender"></td>
-        <th>Age</th>
-        <td id="age"></td>
+        <th>Blood Group</th><td id="blood_group"></td>
+        <th>Height</th><td id="height"></td>
       </tr>
       <tr>
-        <th>Nationality</th>
-        <td id="nationality"></td>
-        <th>DOB</th>
-        <td id="dob"></td>
-        <th>Contact No</th>
-        <td id="contact"></td>
+        <th>Weight</th><td id="weight"></td>
+        <th>Waist Size</th><td id="waist_size"></td>
       </tr>
       <tr>
-        <th>Relation Person</th>
-        <td colspan="5" id="relation"></td>
-      </tr>
-    </table>
-
-    <table>
-      <tr>
-        <th>Blood Group</th>
-        <td id="blood_group"></td>
-        <th>Height</th>
-        <td id="height"></td>
-        <th>Weight</th>
-        <td id="weight"></td>
-      </tr>
-      <tr>
-        <th>Waist Size</th>
-        <td id="waist_size"></td>
-        <th>Blood Sugar</th>
-        <td id="blood_sugar"></td>
-        <th>Blood Pressure</th>
-        <td id="blood_pressure"></td>
+        <th>Blood Sugar</th><td id="blood_sugar"></td>
+        <th>Blood Pressure</th><td id="blood_pressure"></td>
       </tr>
     </table>
 
@@ -144,30 +120,53 @@
   </div>
 
   <script>
-    const data = JSON.parse(decodeURIComponent(location.hash.substring(1)));
+    // Simple lookup map (should be replaced with dynamic fetch if needed)
+    const employees = {
+      "SM23": {
+        name: "SURENDRA MEGHWAL",
+        designation: "Technician",
+        company: "KHAWAKIB AL SHAMS SOLAR ENERGY LLC",
+        address: "NUZUL CAMP, JEBAL ALI ,DUBAI,UAE",
+        eid: "784-2000-3424322-8",
+        gender: "Male",
+        age: "23",
+        dob: "22/03/2000",
+        nationality: "India",
+        contact: "0568921816",
+        relation_name: "Brother",
+        relation_phone: "0566974101",
+        blood_group: "O+",
+        height: "5.5",
+        weight: "74",
+        waist_size: "30",
+        blood_sugar: "No",
+        blood_pressure: "No",
+        photo: "https://raw.githubusercontent.com/Sample-MC/Sample/main/sample.jpg"
+      }
+    };
 
-    document.getElementById('name').textContent = data.n || "";
-    document.getElementById('designation').textContent = data.d || "";
-    document.getElementById('company').textContent = data.c || "";
-    document.getElementById('address').textContent = data.a || "";
-    document.getElementById('eid').textContent = data.e || "";
-    document.getElementById('gender').textContent = data.g || "";
-    document.getElementById('age').textContent = data.ag || "";
-    document.getElementById('dob').textContent = data.dob || "";
-    document.getElementById('nationality').textContent = data.nat || "";
-    document.getElementById('contact').textContent = data.ph || "";
-    document.getElementById('relation').textContent = `${data.rp || ""} (${data.rph || ""})`;
-    document.getElementById('blood_group').textContent = data.bg || "";
-    document.getElementById('height').textContent = data.h || "";
-    document.getElementById('weight').textContent = data.w || "";
-    document.getElementById('waist_size').textContent = data.ws || "";
-    document.getElementById('blood_sugar').textContent = data.bs || "";
-    document.getElementById('blood_pressure').textContent = data.bp || "";
+    const id = location.hash.substring(1);
+    const data = employees[id];
 
-    if (data.p) {
-      document.getElementById('photo').src = data.p;
-    } else {
-      document.getElementById('photo').style.display = "none";
+    if (data) {
+      document.getElementById("name").textContent = data.name;
+      document.getElementById("designation").textContent = data.designation;
+      document.getElementById("company").textContent = data.company;
+      document.getElementById("address").textContent = data.address;
+      document.getElementById("eid").textContent = data.eid;
+      document.getElementById("gender").textContent = data.gender;
+      document.getElementById("age").textContent = data.age;
+      document.getElementById("dob").textContent = data.dob;
+      document.getElementById("nationality").textContent = data.nationality;
+      document.getElementById("contact").textContent = data.contact;
+      document.getElementById("relation").textContent = `${data.relation_name} (${data.relation_phone})`;
+      document.getElementById("blood_group").textContent = data.blood_group;
+      document.getElementById("height").textContent = data.height;
+      document.getElementById("weight").textContent = data.weight;
+      document.getElementById("waist_size").textContent = data.waist_size;
+      document.getElementById("blood_sugar").textContent = data.blood_sugar;
+      document.getElementById("blood_pressure").textContent = data.blood_pressure;
+      document.getElementById("photo").src = data.photo;
     }
   </script>
 </body>
