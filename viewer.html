@@ -20,17 +20,20 @@
       border: 2px solid #1e90ff;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow-wrap: break-word;
       page-break-inside: avoid;
     }
 
     .logo {
       width: 150px;
+      max-width: 100%;
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .photo {
@@ -56,12 +59,14 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
+      table-layout: fixed;
     }
 
     td, th {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: left;
+      word-wrap: break-word;
     }
 
     th {
@@ -79,15 +84,20 @@
 
     @media print {
       body {
-        padding: 0;
         background: white;
+        padding: 0;
+        margin: 0;
       }
 
       .card {
+        border: 1px solid black;
         margin: 0 auto 30px auto;
         page-break-after: always;
         box-shadow: none;
-        border: 1px solid #000;
+      }
+
+      .quote {
+        color: black;
       }
     }
   </style>
@@ -121,7 +131,7 @@
       </tr>
       <tr>
         <th colspan="1">Emergency Contact</th>
-        <td colspan="3" id="relation"></td>
+        <td colspan="5" id="relation"></td>
       </tr>
     </table>
 
@@ -129,12 +139,10 @@
       <tr>
         <th>Blood Group</th><td id="blood_group"></td>
         <th>Height</th><td id="height"></td>
-      </tr>
-      <tr>
         <th>Weight</th><td id="weight"></td>
-        <th>Waist Size</th><td id="waist_size"></td>
       </tr>
       <tr>
+        <th>Waist Size</th><td id="waist_size"></td>
         <th>Blood Sugar</th><td id="blood_sugar"></td>
         <th>Blood Pressure</th><td id="blood_pressure"></td>
       </tr>
