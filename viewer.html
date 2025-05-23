@@ -1,124 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Staff Emergency Card</title>
+  <meta charset="UTF-8">
+  <title>Emergency Medical Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 10px;
-      padding: 0;
-    }
+    body { font-family: sans-serif; background: #eee; margin: 0; padding: 20px; }
     .card {
-      border: 2px solid #000;
-      padding: 10px;
-      max-width: 400px;
-      margin: auto;
+      background: white; padding: 20px; max-width: 600px; margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
-    .logo {
-      text-align: center;
-    }
-    .logo img {
-      max-height: 50px;
-    }
-    .header {
-      background-color: #d71920;
-      color: #fff;
-      padding: 8px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-    }
-    .photo {
-      text-align: right;
-    }
-    .photo img {
-      width: 80px;
-      height: 100px;
-      border: 2px solid #000;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 5px;
-    }
-    td {
-      border: 1px solid #000;
-      padding: 4px;
-      vertical-align: top;
-    }
-    td.label {
-      font-weight: bold;
-      background-color: #f2f2f2;
-      width: 40%;
-    }
-    .section-title {
-      background-color: #d71920;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      font-weight: bold;
-    }
+    .photo { float: right; width: 100px; height: 120px; object-fit: cover; margin-left: 10px; }
+    .label { font-weight: bold; }
+    .info { margin-bottom: 8px; }
   </style>
 </head>
 <body>
-  <div class="card" id="card"></div>
-
+  <div class="card" id="card">Loading...</div>
+  <script src="data.js"></script>
   <script>
-    function decodeHashData() {
-      const hash = decodeURIComponent(location.hash.substring(1));
-      return JSON.parse(hash);
+    const id = location.hash.replace("#", "");
+    const emp = employees.find(e => e.id === id);
+    const card = document.getElementById("card");
+
+    if (!emp) {
+      card.innerHTML = "<p>Employee not found.</p>";
+    } else {
+      card.innerHTML = \`
+        <h2>Emergency Medical Card</h2>
+        <img class="photo" src="photos/\${emp.photo}" alt="Photo">
+        <div class="info"><span class="label">Name:</span> \${emp.name}</div>
+        <div class="info"><span class="label">EMP ID:</span> \${emp.id}</div>
+        <div class="info"><span class="label">Age:</span> \${emp.age}</div>
+        <div class="info"><span class="label">DOB:</span> \${emp.dob}</div>
+        <div class="info"><span class="label">Gender:</span> \${emp.gender}</div>
+        <div class="info"><span class="label">Designation:</span> \${emp.designation}</div>
+        <div class="info"><span class="label">Contact:</span> \${emp.contact}</div>
+        <div class="info"><span class="label">Emergency Contact:</span> \${emp.emergency_contact} (\${emp.relationship})</div>
+        <div class="info"><span class="label">Company Address:</span> \${emp.company_address}</div>
+        <div class="info"><span class="label">Residential Address:</span> \${emp.residential_address}</div>
+        <div class="info"><span class="label">Blood Group:</span> \${emp.blood_group}</div>
+        <div class="info"><span class="label">Medical Insurance:</span> \${emp.medical_insurance}</div>
+      \`;
     }
-
-    function createTable(data) {
-      const fields = [
-        ["Name", "name"],
-        ["Age", "age"],
-        ["Designation", "designation"],
-        ["DOB", "dob"],
-        ["Gender", "gender"],
-        ["Contact no", "contact"]
-      ];
-
-      let html = '<div class="header">STAFF EMERGENCY CARD</div><table>';
-      for (const [label, key] of fields) {
-        html += `<tr><td class="label">${label}</td><td>${data[key]}</td></tr>`;
-      }
-      html += '</table>';
-
-      html += '<div class="section-title">EMERGENCY CONTACT</div><table>';
-      html += `<tr><td class="label">Emergency Contact No</td><td>${data.emergency_contact}</td></tr>`;
-      html += `<tr><td class="label">Relationship to Employee</td><td>${data.relation}</td></tr>`;
-      html += `<tr><td class="label">Company Address</td><td>${data.company_address}</td></tr>`;
-      html += `<tr><td class="label">Residential Address</td><td>${data.residential_address}</td></tr>`;
-      html += '</table>';
-
-      html += '<div class="section-title">MEDICAL CONCERNS</div><table>';
-      html += `<tr><td class="label">Blood Group</td><td>${data.blood_group}</td></tr>`;
-      html += `<tr><td class="label">Medical Insurance No</td><td>${data.insurance_no}</td></tr>`;
-      html += '</table>';
-
-      return html;
-    }
-
-    function renderCard() {
-      const data = decodeHashData();
-      const cardDiv = document.getElementById("card");
-
-      const top = `
-        <div class="logo">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Fujitec_logo.svg/512px-Fujitec_logo.svg.png" alt="Fujitec Logo"/>
-        </div>
-        <div class="photo">
-          <img src="${data.photo}" alt="Employee Photo"/>
-        </div>
-      `;
-
-      cardDiv.innerHTML = top + createTable(data);
-    }
-
-    renderCard();
   </script>
 </body>
 </html>
