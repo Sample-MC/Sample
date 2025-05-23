@@ -2,118 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Staff Emergency Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Contact Card</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      max-width: 700px;
-    }
-    .card {
-      border: 1px solid #ccc;
+      background: #fff;
+      margin: 0;
       padding: 20px;
     }
-    .header {
+    .card {
+      width: 720px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .logo {
       text-align: center;
     }
-    .header img {
-      height: 60px;
-    }
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .photo {
-      width: 120px;
-      height: 150px;
-      object-fit: cover;
-      border: 1px solid #ccc;
+    .logo img {
+      height: 50px;
     }
     .section {
       margin-top: 20px;
-      border-top: 4px solid #D71920;
-      padding-top: 10px;
+      border: 2px solid #d32f2f;
     }
-    h2 {
-      background-color: #D71920;
+    .section-title {
+      background: #d32f2f;
       color: white;
-      padding: 5px 10px;
-      margin: 0;
+      padding: 10px;
+      font-weight: bold;
+      text-align: center;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 5px;
     }
     td {
+      padding: 10px;
       border: 1px solid #ccc;
-      padding: 8px;
-      vertical-align: top;
     }
-    td.label {
-      font-weight: bold;
-      background-color: #f5f5f5;
-      width: 30%;
+    .photo {
+      float: right;
+      width: 100px;
+      height: 120px;
+      object-fit: cover;
+      border: 1px solid #ccc;
     }
   </style>
-  <script src="data.js"></script>
 </head>
 <body>
-  <div class="card" id="card-container">
-    <!-- Content will be injected by JS -->
+  <div class="card">
+    <div class="logo">
+      <img src="fujitec-logo.png" alt="Fujitec Logo">
+    </div>
+    <div id="card-content"></div>
   </div>
 
+  <script src="data.js"></script>
   <script>
-    function getEmployeeIdFromHash() {
-      return window.location.hash.slice(1); // remove '#'
-    }
+    const employeeId = window.location.hash.substring(1);
+    const employee = employees.find(emp => emp.id === employeeId);
 
-    function renderCard(employee) {
-      const container = document.getElementById('card-container');
-      container.innerHTML = `
-        <div class="header">
-          <img src="fujitec-logo.png" alt="Company Logo">
-          <h2>STAFF EMERGENCY CARD</h2>
-        </div>
-        <div class="row">
-          <table style="width: 70%;">
-            <tr><td class="label">Name</td><td>${employee.name}</td></tr>
-            <tr><td class="label">Age</td><td>${employee.age}</td></tr>
-            <tr><td class="label">Designation</td><td>${employee.designation}</td></tr>
-            <tr><td class="label">DOB</td><td>${employee.dob}</td></tr>
-            <tr><td class="label">Gender</td><td>${employee.gender}</td></tr>
-            <tr><td class="label">Contact no</td><td>${employee.contact}</td></tr>
-          </table>
-          <img class="photo" src="photos/${employee.photo}" alt="Employee Photo">
-        </div>
-
+    if (employee) {
+      document.getElementById('card-content').innerHTML = `
         <div class="section">
-          <h2>EMERGENCY CONTACT</h2>
+          <div class="section-title">STAFF EMERGENCY CARD</div>
           <table>
-            <tr><td class="label">Emergency Contact No</td><td>${employee.emergency_contact}</td></tr>
-            <tr><td class="label">Relationship to Employee</td><td>${employee.relationship}</td></tr>
-            <tr><td class="label">Company Address</td><td>${employee.company_address}</td></tr>
-            <tr><td class="label">Residential Address</td><td>${employee.residential_address}</td></tr>
+            <tr>
+              <td>Name</td>
+              <td>${employee.name}</td>
+              <td rowspan="6"><img class="photo" src="photos/${employee.photo}" alt="${employee.name}"></td>
+            </tr>
+            <tr><td>Age</td><td>${employee.age}</td></tr>
+            <tr><td>Designation</td><td>${employee.designation}</td></tr>
+            <tr><td>DOB :</td><td>${employee.dob}</td></tr>
+            <tr><td>Gender :</td><td>${employee.gender}</td></tr>
+            <tr><td>Contact no :</td><td>${employee.contact}</td></tr>
           </table>
         </div>
 
         <div class="section">
-          <h2>MEDICAL CONCERNS</h2>
+          <div class="section-title">EMERGENCY CONTACT</div>
           <table>
-            <tr><td class="label">Blood Group</td><td>${employee.blood_group}</td></tr>
-            <tr><td class="label">Medical Insurance No</td><td>${employee.medical_insurance}</td></tr>
+            <tr><td>Emergency Contact No :</td><td>${employee.emergency_contact}</td></tr>
+            <tr><td>Relationship to Employee :</td><td>${employee.relationship}</td></tr>
+            <tr><td>Company Address :</td><td>${employee.company_address}</td></tr>
+            <tr><td>Residential Address :</td><td>${employee.residential_address}</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <div class="section-title">MEDICAL CONCERNS</div>
+          <table>
+            <tr><td>Blood Group :</td><td>${employee.blood_group}</td></tr>
+            <tr><td>Medical Insurance No :</td><td>${employee.medical_insurance}</td></tr>
           </table>
         </div>
       `;
-    }
-
-    const employeeId = getEmployeeIdFromHash();
-    const employee = employees.find(emp => emp.id === employeeId);
-    if (employee) {
-      renderCard(employee);
     } else {
-      document.getElementById('card-container').innerHTML = "<p>Employee not found.</p>";
+      document.getElementById('card-content').innerHTML = '<p>No employee data found.</p>';
     }
   </script>
 </body>
