@@ -7,24 +7,51 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #fff;
-      padding: 20px;
+      margin: 10px;
+      padding: 0;
     }
     .card {
-      max-width: 600px;
-      margin: auto;
       border: 2px solid #000;
-      padding: 20px;
+      padding: 10px;
+      max-width: 400px;
+      margin: auto;
     }
-    .header img {
-      width: 120px;
+    .logo {
+      text-align: center;
+    }
+    .logo img {
+      max-height: 50px;
+    }
+    .header {
+      background-color: #d71920;
+      color: #fff;
+      padding: 8px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
     }
     .photo {
-      float: right;
+      text-align: right;
+    }
+    .photo img {
       width: 80px;
       height: 100px;
-      object-fit: cover;
+      border: 2px solid #000;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 5px;
+    }
+    td {
       border: 1px solid #000;
+      padding: 4px;
+      vertical-align: top;
+    }
+    td.label {
+      font-weight: bold;
+      background-color: #f2f2f2;
+      width: 40%;
     }
     .section-title {
       background-color: #d71920;
@@ -32,72 +59,66 @@
       text-align: center;
       padding: 5px;
       font-weight: bold;
-      margin-top: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    td {
-      border: 1px solid #000;
-      padding: 5px;
-      vertical-align: top;
-    }
-    td.label {
-      font-weight: bold;
-      background: #eef3fb;
-      width: 40%;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="header">
-      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo">
-      <img id="photo" src="" class="photo" alt="Photo" />
-    </div>
-    <div class="section-title">STAFF EMERGENCY CARD</div>
-    <table>
-      <tr><td class="label">Name</td><td id="name"></td></tr>
-      <tr><td class="label">Age</td><td id="age"></td></tr>
-      <tr><td class="label">Designation</td><td id="designation"></td></tr>
-      <tr><td class="label">DOB</td><td id="dob"></td></tr>
-      <tr><td class="label">Gender</td><td id="gender"></td></tr>
-      <tr><td class="label">Contact no</td><td id="contact"></td></tr>
-    </table>
-
-    <div class="section-title">EMERGENCY CONTACT</div>
-    <table>
-      <tr><td class="label">Emergency Contact No</td><td id="emergency_contact"></td></tr>
-      <tr><td class="label">Relationship to Employee</td><td id="relation"></td></tr>
-      <tr><td class="label">Company Address</td><td id="company_address"></td></tr>
-      <tr><td class="label">Residential Address</td><td id="residential_address"></td></tr>
-    </table>
-
-    <div class="section-title">MEDICAL CONCERNS</div>
-    <table>
-      <tr><td class="label">Blood Group</td><td id="blood_group"></td></tr>
-      <tr><td class="label">Medical Insurance No</td><td id="insurance_no"></td></tr>
-    </table>
-  </div>
+  <div class="card" id="card"></div>
 
   <script>
-    const data = JSON.parse(decodeURIComponent(location.hash.substring(1)));
-    document.getElementById("name").textContent = data.name || "";
-    document.getElementById("age").textContent = data.age || "";
-    document.getElementById("designation").textContent = data.designation || "";
-    document.getElementById("dob").textContent = data.dob || "";
-    document.getElementById("gender").textContent = data.gender || "";
-    document.getElementById("contact").textContent = data.contact || "";
-    document.getElementById("emergency_contact").textContent = data.emergency_contact || "";
-    document.getElementById("relation").textContent = data.relation || "";
-    document.getElementById("company_address").textContent = data.company_address || "";
-    document.getElementById("residential_address").textContent = data.residential_address || "";
-    document.getElementById("blood_group").textContent = data.blood_group || "";
-    document.getElementById("insurance_no").textContent = data.insurance_no || "";
-    if (data.photo) {
-      document.getElementById("photo").src = data.photo;
+    function decodeHashData() {
+      const hash = decodeURIComponent(location.hash.substring(1));
+      return JSON.parse(hash);
     }
+
+    function createTable(data) {
+      const fields = [
+        ["Name", "name"],
+        ["Age", "age"],
+        ["Designation", "designation"],
+        ["DOB", "dob"],
+        ["Gender", "gender"],
+        ["Contact no", "contact"]
+      ];
+
+      let html = '<div class="header">STAFF EMERGENCY CARD</div><table>';
+      for (const [label, key] of fields) {
+        html += `<tr><td class="label">${label}</td><td>${data[key]}</td></tr>`;
+      }
+      html += '</table>';
+
+      html += '<div class="section-title">EMERGENCY CONTACT</div><table>';
+      html += `<tr><td class="label">Emergency Contact No</td><td>${data.emergency_contact}</td></tr>`;
+      html += `<tr><td class="label">Relationship to Employee</td><td>${data.relation}</td></tr>`;
+      html += `<tr><td class="label">Company Address</td><td>${data.company_address}</td></tr>`;
+      html += `<tr><td class="label">Residential Address</td><td>${data.residential_address}</td></tr>`;
+      html += '</table>';
+
+      html += '<div class="section-title">MEDICAL CONCERNS</div><table>';
+      html += `<tr><td class="label">Blood Group</td><td>${data.blood_group}</td></tr>`;
+      html += `<tr><td class="label">Medical Insurance No</td><td>${data.insurance_no}</td></tr>`;
+      html += '</table>';
+
+      return html;
+    }
+
+    function renderCard() {
+      const data = decodeHashData();
+      const cardDiv = document.getElementById("card");
+
+      const top = `
+        <div class="logo">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Fujitec_logo.svg/512px-Fujitec_logo.svg.png" alt="Fujitec Logo"/>
+        </div>
+        <div class="photo">
+          <img src="${data.photo}" alt="Employee Photo"/>
+        </div>
+      `;
+
+      cardDiv.innerHTML = top + createTable(data);
+    }
+
+    renderCard();
   </script>
 </body>
 </html>
