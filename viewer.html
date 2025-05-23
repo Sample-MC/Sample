@@ -1,108 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emergency Contact Card</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Emergency Card</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #fff;
-      margin: 0;
       padding: 20px;
     }
     .card {
-      width: 720px;
-      border: 1px solid #ccc;
-      padding: 20px;
+      max-width: 600px;
       margin: auto;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 2px solid #000;
+      padding: 20px;
     }
-    .logo {
-      text-align: center;
+    .header img {
+      width: 120px;
     }
-    .logo img {
-      height: 50px;
-    }
-    .section {
-      margin-top: 20px;
-      border: 2px solid #d32f2f;
+    .photo {
+      float: right;
+      width: 80px;
+      height: 100px;
+      object-fit: cover;
+      border: 1px solid #000;
     }
     .section-title {
-      background: #d32f2f;
+      background-color: #d71920;
       color: white;
-      padding: 10px;
-      font-weight: bold;
       text-align: center;
+      padding: 5px;
+      font-weight: bold;
+      margin-top: 20px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
     }
     td {
-      padding: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid #000;
+      padding: 5px;
+      vertical-align: top;
     }
-    .photo {
-      float: right;
-      width: 100px;
-      height: 120px;
-      object-fit: cover;
-      border: 1px solid #ccc;
+    td.label {
+      font-weight: bold;
+      background: #eef3fb;
+      width: 40%;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="logo">
-      <img src="fujitec-logo.png" alt="Fujitec Logo">
+    <div class="header">
+      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo">
+      <img id="photo" src="" class="photo" alt="Photo" />
     </div>
-    <div id="card-content"></div>
+    <div class="section-title">STAFF EMERGENCY CARD</div>
+    <table>
+      <tr><td class="label">Name</td><td id="name"></td></tr>
+      <tr><td class="label">Age</td><td id="age"></td></tr>
+      <tr><td class="label">Designation</td><td id="designation"></td></tr>
+      <tr><td class="label">DOB</td><td id="dob"></td></tr>
+      <tr><td class="label">Gender</td><td id="gender"></td></tr>
+      <tr><td class="label">Contact no</td><td id="contact"></td></tr>
+    </table>
+
+    <div class="section-title">EMERGENCY CONTACT</div>
+    <table>
+      <tr><td class="label">Emergency Contact No</td><td id="emergency_contact"></td></tr>
+      <tr><td class="label">Relationship to Employee</td><td id="relation"></td></tr>
+      <tr><td class="label">Company Address</td><td id="company_address"></td></tr>
+      <tr><td class="label">Residential Address</td><td id="residential_address"></td></tr>
+    </table>
+
+    <div class="section-title">MEDICAL CONCERNS</div>
+    <table>
+      <tr><td class="label">Blood Group</td><td id="blood_group"></td></tr>
+      <tr><td class="label">Medical Insurance No</td><td id="insurance_no"></td></tr>
+    </table>
   </div>
 
-  <script src="data.js"></script>
   <script>
-    const employeeId = window.location.hash.substring(1);
-    const employee = employees.find(emp => emp.id === employeeId);
-
-    if (employee) {
-      document.getElementById('card-content').innerHTML = `
-        <div class="section">
-          <div class="section-title">STAFF EMERGENCY CARD</div>
-          <table>
-            <tr>
-              <td>Name</td>
-              <td>${employee.name}</td>
-              <td rowspan="6"><img class="photo" src="photos/${employee.photo}" alt="${employee.name}"></td>
-            </tr>
-            <tr><td>Age</td><td>${employee.age}</td></tr>
-            <tr><td>Designation</td><td>${employee.designation}</td></tr>
-            <tr><td>DOB :</td><td>${employee.dob}</td></tr>
-            <tr><td>Gender :</td><td>${employee.gender}</td></tr>
-            <tr><td>Contact no :</td><td>${employee.contact}</td></tr>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-title">EMERGENCY CONTACT</div>
-          <table>
-            <tr><td>Emergency Contact No :</td><td>${employee.emergency_contact}</td></tr>
-            <tr><td>Relationship to Employee :</td><td>${employee.relationship}</td></tr>
-            <tr><td>Company Address :</td><td>${employee.company_address}</td></tr>
-            <tr><td>Residential Address :</td><td>${employee.residential_address}</td></tr>
-          </table>
-        </div>
-
-        <div class="section">
-          <div class="section-title">MEDICAL CONCERNS</div>
-          <table>
-            <tr><td>Blood Group :</td><td>${employee.blood_group}</td></tr>
-            <tr><td>Medical Insurance No :</td><td>${employee.medical_insurance}</td></tr>
-          </table>
-        </div>
-      `;
-    } else {
-      document.getElementById('card-content').innerHTML = '<p>No employee data found.</p>';
+    const data = JSON.parse(decodeURIComponent(location.hash.substring(1)));
+    document.getElementById("name").textContent = data.name || "";
+    document.getElementById("age").textContent = data.age || "";
+    document.getElementById("designation").textContent = data.designation || "";
+    document.getElementById("dob").textContent = data.dob || "";
+    document.getElementById("gender").textContent = data.gender || "";
+    document.getElementById("contact").textContent = data.contact || "";
+    document.getElementById("emergency_contact").textContent = data.emergency_contact || "";
+    document.getElementById("relation").textContent = data.relation || "";
+    document.getElementById("company_address").textContent = data.company_address || "";
+    document.getElementById("residential_address").textContent = data.residential_address || "";
+    document.getElementById("blood_group").textContent = data.blood_group || "";
+    document.getElementById("insurance_no").textContent = data.insurance_no || "";
+    if (data.photo) {
+      document.getElementById("photo").src = data.photo;
     }
   </script>
 </body>
