@@ -2,46 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Emergency Medical Card</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Info Viewer</title>
   <style>
-    body { font-family: sans-serif; background: #eee; margin: 0; padding: 20px; }
-    .card {
-      background: white; padding: 20px; max-width: 600px; margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    #content {
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      max-width: 500px;
     }
-    .photo { float: right; width: 100px; height: 120px; object-fit: cover; margin-left: 10px; }
-    .label { font-weight: bold; }
-    .info { margin-bottom: 8px; }
   </style>
 </head>
 <body>
-  <div class="card" id="card">Loading...</div>
-  <script src="data.js"></script>
-  <script>
-    const id = location.hash.replace("#", "");
-    const emp = employees.find(e => e.id === id);
-    const card = document.getElementById("card");
+  <h1>Employee Details</h1>
+  <div id="content">Loading...</div>
 
-    if (!emp) {
-      card.innerHTML = "<p>Employee not found.</p>";
+  <!-- Load your employee data -->
+  <script src="data.js"></script>
+
+  <script>
+    const empId = window.location.hash.substring(1);
+    const content = document.getElementById('content');
+
+    if (!empId) {
+      content.innerText = "No employee ID provided.";
     } else {
-      card.innerHTML = \`
-        <h2>Emergency Medical Card</h2>
-        <img class="photo" src="photos/\${emp.photo}" alt="Photo">
-        <div class="info"><span class="label">Name:</span> \${emp.name}</div>
-        <div class="info"><span class="label">EMP ID:</span> \${emp.id}</div>
-        <div class="info"><span class="label">Age:</span> \${emp.age}</div>
-        <div class="info"><span class="label">DOB:</span> \${emp.dob}</div>
-        <div class="info"><span class="label">Gender:</span> \${emp.gender}</div>
-        <div class="info"><span class="label">Designation:</span> \${emp.designation}</div>
-        <div class="info"><span class="label">Contact:</span> \${emp.contact}</div>
-        <div class="info"><span class="label">Emergency Contact:</span> \${emp.emergency_contact} (\${emp.relationship})</div>
-        <div class="info"><span class="label">Company Address:</span> \${emp.company_address}</div>
-        <div class="info"><span class="label">Residential Address:</span> \${emp.residential_address}</div>
-        <div class="info"><span class="label">Blood Group:</span> \${emp.blood_group}</div>
-        <div class="info"><span class="label">Medical Insurance:</span> \${emp.medical_insurance}</div>
-      \`;
+      const emp = employeeData.find(e => e["EMP ID"] === empId);
+      if (emp) {
+        content.innerHTML = `
+          <p><strong>EMP ID:</strong> ${emp["EMP ID"]}</p>
+          <p><strong>Name:</strong> ${emp["Name"]}</p>
+          <p><strong>Phone:</strong> ${emp["Phone"]}</p>
+          <p><strong>Emergency Contact:</strong> ${emp["Emergency Contact"]}</p>
+        `;
+      } else {
+        content.innerText = "Employee not found.";
+      }
     }
   </script>
 </body>
