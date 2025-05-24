@@ -2,99 +2,150 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Emergency Medical Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Staff Emergency Card</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
+      font-family: 'Arial', sans-serif;
+      background: #f5f5f5;
       padding: 20px;
     }
+
     .card {
-      width: 700px;
+      max-width: 750px;
       margin: auto;
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-      position: relative;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 24px;
     }
-    .card h2 {
-      text-align: center;
-      color: #d9252b;
-      margin-bottom: 30px;
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
-    .photo {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      width: 120px;
-      height: 140px;
-      border: 2px solid #ccc;
+
+    .logo {
+      width: 160px;
+      max-width: 100%;
+    }
+
+    .profile {
+      width: 110px;
+      height: 130px;
+      border: 2px solid #333;
       object-fit: cover;
+      border-radius: 4px;
+      background-color: #eee;
     }
-    .details {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+
+    h2 {
+      background: #d0101b;
+      color: white;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 1.2em;
+      border-radius: 4px;
     }
-    .row {
-      display: flex;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
     }
-    .label {
-      width: 220px;
-      background-color: #dff1fa;
-      font-weight: bold;
-      padding: 6px 10px;
+
+    td {
       border: 1px solid #ccc;
+      padding: 10px;
+      vertical-align: top;
+      font-size: 15px;
+      width: 50%;
     }
-    .value {
-      flex: 1;
-      background-color: #fff;
-      padding: 6px 10px;
-      border: 1px solid #ccc;
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .profile {
+        margin-top: 15px;
+      }
+
+      td {
+        display: block;
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>Emergency Medical Card</h2>
-    <img id="photo" class="photo" src="" alt="Photo" />
-    <div class="details">
-      <div class="row"><div class="label">Name</div><div class="value" id="name"></div></div>
-      <div class="row"><div class="label">Age</div><div class="value" id="age"></div></div>
-      <div class="row"><div class="label">Designation</div><div class="value" id="designation"></div></div>
-      <div class="row"><div class="label">DOB</div><div class="value" id="dob"></div></div>
-      <div class="row"><div class="label">Gender</div><div class="value" id="gender"></div></div>
-      <div class="row"><div class="label">Contact No</div><div class="value" id="contact"></div></div>
-      <div class="row"><div class="label">Emergency Contact</div><div class="value" id="emergency_contact"></div></div>
-      <div class="row"><div class="label">Relationship</div><div class="value" id="relationship"></div></div>
-      <div class="row"><div class="label">Company Address</div><div class="value" id="company_address"></div></div>
-      <div class="row"><div class="label">Residential Address</div><div class="value" id="residential_address"></div></div>
-      <div class="row"><div class="label">Blood Group</div><div class="value" id="blood_group"></div></div>
-      <div class="row"><div class="label">Insurance No</div><div class="value" id="insurance"></div></div>
-    </div>
+    <header>
+      <img src="fujitec-logo.png" alt="Fujitec Logo" class="logo" />
+      <img id="photo" class="profile" src="photos/default.jpg" alt="Employee Photo" />
+    </header>
+
+    <section>
+      <h2>STAFF EMERGENCY CARD</h2>
+      <table>
+        <tr><td>Name</td><td id="name">-</td></tr>
+        <tr><td>Age</td><td id="age">-</td></tr>
+        <tr><td>Designation</td><td id="designation">-</td></tr>
+        <tr><td>DOB</td><td id="dob">-</td></tr>
+        <tr><td>Gender</td><td id="gender">-</td></tr>
+        <tr><td>Contact No</td><td id="contact">-</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>EMERGENCY CONTACT</h2>
+      <table>
+        <tr><td>Emergency Contact No</td><td id="emergency_contact">-</td></tr>
+        <tr><td>Relationship to Employee</td><td id="relationship">-</td></tr>
+        <tr><td>Company Address</td><td id="company_address">-</td></tr>
+        <tr><td>Residential Address</td><td id="residential_address">-</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>MEDICAL CONCERNS</h2>
+      <table>
+        <tr><td>Blood Group</td><td id="blood_group">-</td></tr>
+        <tr><td>Medical Insurance No</td><td id="insurance">-</td></tr>
+      </table>
+    </section>
   </div>
 
   <script>
-    function getParams() {
-      const hash = decodeURIComponent(location.hash.substr(1));
-      const params = {};
-      hash.split("&").forEach(pair => {
-        const [key, value] = pair.split("=");
-        params[key] = value || "";
+    function loadDataFromHash() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+
+      const fields = [
+        "name", "age", "designation", "dob", "gender", "contact",
+        "emergency_contact", "relationship", "company_address", "residential_address",
+        "blood_group", "insurance", "photo"
+      ];
+
+      fields.forEach(key => {
+        const el = document.getElementById(key);
+        const value = params.get(key);
+        if (el && key !== 'photo' && value) {
+          el.innerText = decodeURIComponent(value);
+        }
       });
-      return params;
-    }
 
-    const data = getParams();
-
-    for (const key in data) {
-      const el = document.getElementById(key);
-      if (el) el.textContent = data[key];
-      if (key === "photo" && data[key]) {
-        document.getElementById("photo").src = "photos/" + data[key];
+      const photoFile = params.get("photo");
+      if (photoFile) {
+        document.getElementById("photo").src = `photos/${photoFile}`;
       }
     }
+
+    window.onload = loadDataFromHash;
   </script>
 </body>
 </html>
