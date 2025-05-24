@@ -108,14 +108,16 @@
       ];
       fields.forEach(key => {
         const el = document.getElementById(key);
-        if (el && params.get(key)) {
-          el.innerText = decodeURIComponent(params.get(key));
+        if (el && key !== "photo") {
+          const val = params.get(key);
+          if (val) el.innerText = decodeURIComponent(val);
         }
       });
 
       const photoFile = params.get("photo");
       if (photoFile) {
-        document.getElementById("photo").src = "https://sample-mc.github.io/Sample/photos/" + photoFile;
+        const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]+$/, "/");
+        document.getElementById("photo").src = `${baseUrl}${decodeURIComponent(photoFile)}`;
       }
     }
 
