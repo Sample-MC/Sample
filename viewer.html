@@ -1,125 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Staff Emergency Card</title>
+  <meta charset="UTF-8">
+  <title>Emergency Medical Card</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
       padding: 20px;
     }
-
     .card {
-      max-width: 700px;
+      width: 700px;
       margin: auto;
       background: white;
-      border: 1px solid #ccc;
-      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      overflow: hidden;
     }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .card h2 {
+      text-align: center;
     }
-
-    .logo {
-      width: 150px;
-    }
-
-    .profile {
-      width: 100px;
+    .photo {
+      float: right;
+      width: 120px;
       height: 120px;
+      border: 2px solid #ccc;
       object-fit: cover;
-      border: 1px solid #000;
+      margin-left: 20px;
     }
-
-    h2 {
-      background: #d0101b;
-      color: white;
-      padding: 8px;
-      margin-top: 20px;
-      font-size: 1.1em;
+    .details {
+      line-height: 1.6;
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 8px;
+    .label {
+      font-weight: bold;
     }
-
-    td {
-      border: 1px solid #aaa;
-      padding: 8px;
-      vertical-align: top;
-      font-size: 14px;
-      width: 50%;
+    .row {
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <header>
-      <img src="fujitec-logo.png" alt="Fujitec Logo" class="logo" />
-      <img id="photo" class="profile" src="" alt="Employee Photo" />
-    </header>
-
-    <section>
-      <h2>STAFF EMERGENCY CARD</h2>
-      <table>
-        <tr><td>Name</td><td id="name"></td></tr>
-        <tr><td>Age</td><td id="age"></td></tr>
-        <tr><td>Designation</td><td id="designation"></td></tr>
-        <tr><td>DOB</td><td id="dob"></td></tr>
-        <tr><td>Gender</td><td id="gender"></td></tr>
-        <tr><td>Contact No</td><td id="contact"></td></tr>
-      </table>
-    </section>
-
-    <section>
-      <h2>EMERGENCY CONTACT</h2>
-      <table>
-        <tr><td>Emergency Contact No</td><td id="emergency_contact"></td></tr>
-        <tr><td>Relationship to Employee</td><td id="relationship"></td></tr>
-        <tr><td>Company Address</td><td id="company_address"></td></tr>
-        <tr><td>Residential Address</td><td id="residential_address"></td></tr>
-      </table>
-    </section>
-
-    <section>
-      <h2>MEDICAL CONCERNS</h2>
-      <table>
-        <tr><td>Blood Group</td><td id="blood_group"></td></tr>
-        <tr><td>Medical Insurance No</td><td id="insurance"></td></tr>
-      </table>
-    </section>
+    <h2>Emergency Medical Card</h2>
+    <img id="photo" class="photo" src="photos/default.jpg" alt="Photo" onerror="this.src='photos/default.jpg'" />
+    <div class="details">
+      <div class="row"><span class="label">Name:</span> <span id="name"></span></div>
+      <div class="row"><span class="label">Age:</span> <span id="age"></span></div>
+      <div class="row"><span class="label">Designation:</span> <span id="designation"></span></div>
+      <div class="row"><span class="label">DOB:</span> <span id="dob"></span></div>
+      <div class="row"><span class="label">Gender:</span> <span id="gender"></span></div>
+      <div class="row"><span class="label">Contact No:</span> <span id="contact"></span></div>
+      <div class="row"><span class="label">Emergency Contact:</span> <span id="emergency_contact"></span></div>
+      <div class="row"><span class="label">Relationship:</span> <span id="relationship"></span></div>
+      <div class="row"><span class="label">Company Address:</span> <span id="company_address"></span></div>
+      <div class="row"><span class="label">Residential Address:</span> <span id="residential_address"></span></div>
+      <div class="row"><span class="label">Blood Group:</span> <span id="blood_group"></span></div>
+      <div class="row"><span class="label">Insurance No:</span> <span id="insurance"></span></div>
+    </div>
   </div>
 
   <script>
-    function loadDataFromHash() {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-      const fields = [
-        "name", "age", "designation", "dob", "gender", "contact",
-        "emergency_contact", "relationship", "company_address", "residential_address",
-        "blood_group", "insurance", "photo"
-      ];
-      fields.forEach(key => {
-        const el = document.getElementById(key);
-        if (el && key !== 'photo' && params.get(key)) {
-          el.innerText = decodeURIComponent(params.get(key));
-        }
+    function getParams() {
+      const hash = decodeURIComponent(location.hash.substr(1));
+      const params = {};
+      hash.split("&").forEach(pair => {
+        const [key, value] = pair.split("=");
+        params[key] = value;
       });
-
-      const photoFile = params.get("photo");
-      if (photoFile) {
-        document.getElementById("photo").src = `photos/${photoFile}`;
-      }
+      return params;
     }
 
-    window.onload = loadDataFromHash;
+    const data = getParams();
+    for (const key in data) {
+      const el = document.getElementById(key);
+      if (el) el.textContent = data[key];
+      if (key === "photo" && data[key]) {
+        document.getElementById("photo").src = "photos/" + data[key];
+      }
+    }
   </script>
 </body>
 </html>
