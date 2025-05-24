@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Staff Emergency Card</title>
+  <title>Emergency Medical Card</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -12,43 +11,36 @@
     }
 
     .card {
-      max-width: 750px;
+      max-width: 700px;
       margin: auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 24px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
     }
 
     .logo {
-      width: 160px;
-      max-width: 100%;
+      width: 150px;
     }
 
     .profile {
-      width: 110px;
-      height: 130px;
-      border: 2px solid #333;
+      width: 100px;
+      height: 120px;
       object-fit: cover;
-      border-radius: 4px;
-      background-color: #eee;
+      border: 1px solid #000;
     }
 
     h2 {
       background: #d0101b;
       color: white;
-      padding: 10px;
+      padding: 8px;
       margin-top: 20px;
-      font-size: 1.2em;
-      border-radius: 4px;
+      font-size: 1.1em;
     }
 
     table {
@@ -58,27 +50,11 @@
     }
 
     td {
-      border: 1px solid #ccc;
-      padding: 10px;
+      border: 1px solid #aaa;
+      padding: 8px;
       vertical-align: top;
-      font-size: 15px;
+      font-size: 14px;
       width: 50%;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .profile {
-        margin-top: 15px;
-      }
-
-      td {
-        display: block;
-        width: 100%;
-      }
     }
   </style>
 </head>
@@ -86,66 +62,59 @@
   <div class="card">
     <header>
       <img src="fujitec-logo.png" alt="Fujitec Logo" class="logo" />
-      <img id="photo" class="profile" src="photos/default.jpg" alt="Employee Photo" />
+      <img id="photo" class="profile" src="" alt="Employee Photo" />
     </header>
 
     <section>
       <h2>STAFF EMERGENCY CARD</h2>
       <table>
-        <tr><td>Name</td><td id="name">-</td></tr>
-        <tr><td>Age</td><td id="age">-</td></tr>
-        <tr><td>Designation</td><td id="designation">-</td></tr>
-        <tr><td>DOB</td><td id="dob">-</td></tr>
-        <tr><td>Gender</td><td id="gender">-</td></tr>
-        <tr><td>Contact No</td><td id="contact">-</td></tr>
+        <tr><td>Name</td><td id="name"></td></tr>
+        <tr><td>Age</td><td id="age"></td></tr>
+        <tr><td>Designation</td><td id="designation"></td></tr>
+        <tr><td>DOB</td><td id="dob"></td></tr>
+        <tr><td>Gender</td><td id="gender"></td></tr>
+        <tr><td>Contact No</td><td id="contact"></td></tr>
       </table>
     </section>
 
     <section>
       <h2>EMERGENCY CONTACT</h2>
       <table>
-        <tr><td>Emergency Contact No</td><td id="emergency_contact">-</td></tr>
-        <tr><td>Relationship to Employee</td><td id="relationship">-</td></tr>
-        <tr><td>Company Address</td><td id="company_address">-</td></tr>
-        <tr><td>Residential Address</td><td id="residential_address">-</td></tr>
+        <tr><td>Emergency Contact No</td><td id="emergency_contact"></td></tr>
+        <tr><td>Relationship to Employee</td><td id="relationship"></td></tr>
+        <tr><td>Company Address</td><td id="company_address"></td></tr>
+        <tr><td>Residential Address</td><td id="residential_address"></td></tr>
       </table>
     </section>
 
     <section>
       <h2>MEDICAL CONCERNS</h2>
       <table>
-        <tr><td>Blood Group</td><td id="blood_group">-</td></tr>
-        <tr><td>Medical Insurance No</td><td id="insurance">-</td></tr>
+        <tr><td>Blood Group</td><td id="blood_group"></td></tr>
+        <tr><td>Medical Insurance No</td><td id="insurance"></td></tr>
       </table>
     </section>
   </div>
 
   <script>
-    function loadDataFromHash() {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-
-      const fields = [
-        "name", "age", "designation", "dob", "gender", "contact",
-        "emergency_contact", "relationship", "company_address", "residential_address",
-        "blood_group", "insurance", "photo"
-      ];
-
-      fields.forEach(key => {
-        const el = document.getElementById(key);
-        const value = params.get(key);
-        if (el && key !== 'photo' && value) {
-          el.innerText = decodeURIComponent(value);
-        }
+    function getParams() {
+      const hash = decodeURIComponent(location.hash.substr(1));
+      const params = {};
+      hash.split("&").forEach(pair => {
+        const [key, value] = pair.split("=");
+        params[key] = value || "";
       });
-
-      const photoFile = params.get("photo");
-      if (photoFile) {
-        document.getElementById("photo").src = `photos/${photoFile}`;
-      }
+      return params;
     }
 
-    window.onload = loadDataFromHash;
+    const data = getParams();
+    for (const key in data) {
+      const el = document.getElementById(key);
+      if (el) el.textContent = data[key];
+      if (key === "photo" && data[key]) {
+        document.getElementById("photo").src = "photos/" + data[key];
+      }
+    }
   </script>
 </body>
 </html>
