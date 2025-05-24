@@ -25,10 +25,12 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
     .logo {
       width: 160px;
+      max-width: 100%;
     }
 
     .profile {
@@ -37,6 +39,7 @@
       border: 2px solid #333;
       object-fit: cover;
       border-radius: 4px;
+      background-color: #eee;
     }
 
     h2 {
@@ -63,12 +66,18 @@
     }
 
     @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .profile {
+        margin-top: 15px;
+      }
+
       td {
         display: block;
         width: 100%;
-      }
-      .profile {
-        margin-top: 15px;
       }
     }
   </style>
@@ -77,36 +86,36 @@
   <div class="card">
     <header>
       <img src="fujitec-logo.png" alt="Fujitec Logo" class="logo" />
-      <img id="photo" class="profile" src="" alt="Employee Photo" />
+      <img id="photo" class="profile" src="photos/default.jpg" alt="Employee Photo" />
     </header>
 
     <section>
       <h2>STAFF EMERGENCY CARD</h2>
       <table>
-        <tr><td>Name</td><td id="name"></td></tr>
-        <tr><td>Age</td><td id="age"></td></tr>
-        <tr><td>Designation</td><td id="designation"></td></tr>
-        <tr><td>DOB</td><td id="dob"></td></tr>
-        <tr><td>Gender</td><td id="gender"></td></tr>
-        <tr><td>Contact No</td><td id="contact"></td></tr>
+        <tr><td>Name</td><td id="name">-</td></tr>
+        <tr><td>Age</td><td id="age">-</td></tr>
+        <tr><td>Designation</td><td id="designation">-</td></tr>
+        <tr><td>DOB</td><td id="dob">-</td></tr>
+        <tr><td>Gender</td><td id="gender">-</td></tr>
+        <tr><td>Contact No</td><td id="contact">-</td></tr>
       </table>
     </section>
 
     <section>
       <h2>EMERGENCY CONTACT</h2>
       <table>
-        <tr><td>Emergency Contact No</td><td id="emergency_contact"></td></tr>
-        <tr><td>Relationship to Employee</td><td id="relationship"></td></tr>
-        <tr><td>Company Address</td><td id="company_address"></td></tr>
-        <tr><td>Residential Address</td><td id="residential_address"></td></tr>
+        <tr><td>Emergency Contact No</td><td id="emergency_contact">-</td></tr>
+        <tr><td>Relationship to Employee</td><td id="relationship">-</td></tr>
+        <tr><td>Company Address</td><td id="company_address">-</td></tr>
+        <tr><td>Residential Address</td><td id="residential_address">-</td></tr>
       </table>
     </section>
 
     <section>
       <h2>MEDICAL CONCERNS</h2>
       <table>
-        <tr><td>Blood Group</td><td id="blood_group"></td></tr>
-        <tr><td>Medical Insurance No</td><td id="insurance"></td></tr>
+        <tr><td>Blood Group</td><td id="blood_group">-</td></tr>
+        <tr><td>Medical Insurance No</td><td id="insurance">-</td></tr>
       </table>
     </section>
   </div>
@@ -115,15 +124,18 @@
     function loadDataFromHash() {
       const hash = window.location.hash.substring(1);
       const params = new URLSearchParams(hash);
+
       const fields = [
         "name", "age", "designation", "dob", "gender", "contact",
         "emergency_contact", "relationship", "company_address", "residential_address",
         "blood_group", "insurance", "photo"
       ];
+
       fields.forEach(key => {
         const el = document.getElementById(key);
-        if (el && key !== 'photo' && params.get(key)) {
-          el.innerText = decodeURIComponent(params.get(key));
+        const value = params.get(key);
+        if (el && key !== 'photo' && value) {
+          el.innerText = decodeURIComponent(value);
         }
       });
 
