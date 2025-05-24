@@ -1,151 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Staff Emergency Card</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 30px;
+    }
+
+    .container {
+      border: 1px solid #000;
+      width: 600px;
+      margin: auto;
       padding: 20px;
     }
 
-    .card {
-      max-width: 750px;
-      margin: auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 24px;
-    }
-
-    header {
+    .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
     }
 
-    .logo {
-      width: 160px;
-      max-width: 100%;
+    .header h1 {
+      color: #d9252b;
+      font-size: 36px;
+      margin: 0;
     }
 
-    .profile {
-      width: 110px;
-      height: 130px;
-      border: 2px solid #333;
-      object-fit: cover;
-      border-radius: 4px;
-      background-color: #eee;
+    .photo {
+      width: 100px;
+      height: 120px;
+      border: 1px solid #000;
+      background-color: #ccc;
+      background-size: cover;
+      background-position: center;
     }
 
-    h2 {
-      background: #d0101b;
+    .section-title {
+      background-color: #d9252b;
       color: white;
-      padding: 10px;
+      padding: 8px;
+      font-weight: bold;
+      text-align: center;
       margin-top: 20px;
-      font-size: 1.2em;
-      border-radius: 4px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      vertical-align: top;
-      font-size: 15px;
-      width: 50%;
+      border: 1px solid black;
+      padding: 8px;
     }
 
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    td.label {
+      background-color: #dff1fa;
+      font-weight: bold;
+      width: 40%;
+    }
 
-      .profile {
-        margin-top: 15px;
-      }
-
-      td {
-        display: block;
-        width: 100%;
-      }
+    td.value {
+      background-color: #ffffff;
+      width: 60%;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <header>
-      <img src="fujitec-logo.png" alt="Fujitec Logo" class="logo" />
-      <img id="photo" class="profile" src="photos/default.jpg" alt="Employee Photo" />
-    </header>
+  <div class="container">
+    <div class="header">
+      <h1>FUJITEC</h1>
+      <div class="photo" style="background-image: url('{{photo_url}}');"></div>
+    </div>
 
-    <section>
-      <h2>STAFF EMERGENCY CARD</h2>
-      <table>
-        <tr><td>Name</td><td id="name">-</td></tr>
-        <tr><td>Age</td><td id="age">-</td></tr>
-        <tr><td>Designation</td><td id="designation">-</td></tr>
-        <tr><td>DOB</td><td id="dob">-</td></tr>
-        <tr><td>Gender</td><td id="gender">-</td></tr>
-        <tr><td>Contact No</td><td id="contact">-</td></tr>
-      </table>
-    </section>
+    <div class="section-title">STAFF EMERGENCY CARD</div>
+    <table>
+      <tr><td class="label">Name</td><td class="value">{{name}}</td></tr>
+      <tr><td class="label">Age</td><td class="value">{{age}}</td></tr>
+      <tr><td class="label">Designation</td><td class="value">{{designation}}</td></tr>
+      <tr><td class="label">DOB</td><td class="value">{{dob}}</td></tr>
+      <tr><td class="label">Gender</td><td class="value">{{gender}}</td></tr>
+      <tr><td class="label">Contact no</td><td class="value">{{contact_no}}</td></tr>
+    </table>
 
-    <section>
-      <h2>EMERGENCY CONTACT</h2>
-      <table>
-        <tr><td>Emergency Contact No</td><td id="emergency_contact">-</td></tr>
-        <tr><td>Relationship to Employee</td><td id="relationship">-</td></tr>
-        <tr><td>Company Address</td><td id="company_address">-</td></tr>
-        <tr><td>Residential Address</td><td id="residential_address">-</td></tr>
-      </table>
-    </section>
+    <div class="section-title">EMERGENCY CONTACT</div>
+    <table>
+      <tr><td class="label">Emergency Contact No</td><td class="value">{{emergency_contact_no}}</td></tr>
+      <tr><td class="label">Relationship to Employee</td><td class="value">{{relationship}}</td></tr>
+      <tr><td class="label">Company Address</td><td class="value">{{company_address}}</td></tr>
+      <tr><td class="label">Residential Address</td><td class="value">{{residential_address}}</td></tr>
+    </table>
 
-    <section>
-      <h2>MEDICAL CONCERNS</h2>
-      <table>
-        <tr><td>Blood Group</td><td id="blood_group">-</td></tr>
-        <tr><td>Medical Insurance No</td><td id="insurance">-</td></tr>
-      </table>
-    </section>
+    <div class="section-title">MEDICAL CONCERNS</div>
+    <table>
+      <tr><td class="label">Blood Group</td><td class="value">{{blood_group}}</td></tr>
+      <tr><td class="label">Medical Insurance No</td><td class="value">{{medical_insurance_no}}</td></tr>
+    </table>
   </div>
-
-  <script>
-    function loadDataFromHash() {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-
-      const fields = [
-        "name", "age", "designation", "dob", "gender", "contact",
-        "emergency_contact", "relationship", "company_address", "residential_address",
-        "blood_group", "insurance", "photo"
-      ];
-
-      fields.forEach(key => {
-        const el = document.getElementById(key);
-        const value = params.get(key);
-        if (el && key !== 'photo' && value) {
-          el.innerText = decodeURIComponent(value);
-        }
-      });
-
-      const photoFile = params.get("photo");
-      if (photoFile) {
-        document.getElementById("photo").src = `photos/${photoFile}`;
-      }
-    }
-
-    window.onload = loadDataFromHash;
-  </script>
 </body>
 </html>
