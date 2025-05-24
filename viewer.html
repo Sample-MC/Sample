@@ -1,105 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Staff Emergency Card</title>
+  <meta charset="UTF-8" />
+  <title>Emergency Medical Card</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 30px;
-    }
-
-    .container {
-      border: 1px solid #000;
-      width: 600px;
-      margin: auto;
+      background: #f0f0f0;
       padding: 20px;
     }
-
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .card {
+      width: 700px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      position: relative;
     }
-
-    .header h1 {
-      color: #d9252b;
-      font-size: 36px;
-      margin: 0;
-    }
-
-    .photo {
-      width: 100px;
-      height: 120px;
-      border: 1px solid #000;
-      background-color: #ccc;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .section-title {
-      background-color: #d9252b;
-      color: white;
-      padding: 8px;
-      font-weight: bold;
+    .card h2 {
       text-align: center;
-      margin-top: 20px;
+      color: #d9252b;
+      margin-bottom: 30px;
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
+    .photo {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 120px;
+      height: 140px;
+      border: 2px solid #ccc;
+      object-fit: cover;
     }
-
-    td {
-      border: 1px solid black;
-      padding: 8px;
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-
-    td.label {
+    .row {
+      display: flex;
+    }
+    .label {
+      width: 220px;
       background-color: #dff1fa;
       font-weight: bold;
-      width: 40%;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
     }
-
-    td.value {
-      background-color: #ffffff;
-      width: 60%;
+    .value {
+      flex: 1;
+      background-color: #fff;
+      padding: 6px 10px;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>FUJITEC</h1>
-      <div class="photo" style="background-image: url('{{photo_url}}');"></div>
+  <div class="card">
+    <h2>Emergency Medical Card</h2>
+    <img id="photo" class="photo" src="" alt="Photo" />
+    <div class="details">
+      <div class="row"><div class="label">Name</div><div class="value" id="name"></div></div>
+      <div class="row"><div class="label">Age</div><div class="value" id="age"></div></div>
+      <div class="row"><div class="label">Designation</div><div class="value" id="designation"></div></div>
+      <div class="row"><div class="label">DOB</div><div class="value" id="dob"></div></div>
+      <div class="row"><div class="label">Gender</div><div class="value" id="gender"></div></div>
+      <div class="row"><div class="label">Contact No</div><div class="value" id="contact"></div></div>
+      <div class="row"><div class="label">Emergency Contact</div><div class="value" id="emergency_contact"></div></div>
+      <div class="row"><div class="label">Relationship</div><div class="value" id="relationship"></div></div>
+      <div class="row"><div class="label">Company Address</div><div class="value" id="company_address"></div></div>
+      <div class="row"><div class="label">Residential Address</div><div class="value" id="residential_address"></div></div>
+      <div class="row"><div class="label">Blood Group</div><div class="value" id="blood_group"></div></div>
+      <div class="row"><div class="label">Insurance No</div><div class="value" id="insurance"></div></div>
     </div>
-
-    <div class="section-title">STAFF EMERGENCY CARD</div>
-    <table>
-      <tr><td class="label">Name</td><td class="value">{{name}}</td></tr>
-      <tr><td class="label">Age</td><td class="value">{{age}}</td></tr>
-      <tr><td class="label">Designation</td><td class="value">{{designation}}</td></tr>
-      <tr><td class="label">DOB</td><td class="value">{{dob}}</td></tr>
-      <tr><td class="label">Gender</td><td class="value">{{gender}}</td></tr>
-      <tr><td class="label">Contact no</td><td class="value">{{contact_no}}</td></tr>
-    </table>
-
-    <div class="section-title">EMERGENCY CONTACT</div>
-    <table>
-      <tr><td class="label">Emergency Contact No</td><td class="value">{{emergency_contact_no}}</td></tr>
-      <tr><td class="label">Relationship to Employee</td><td class="value">{{relationship}}</td></tr>
-      <tr><td class="label">Company Address</td><td class="value">{{company_address}}</td></tr>
-      <tr><td class="label">Residential Address</td><td class="value">{{residential_address}}</td></tr>
-    </table>
-
-    <div class="section-title">MEDICAL CONCERNS</div>
-    <table>
-      <tr><td class="label">Blood Group</td><td class="value">{{blood_group}}</td></tr>
-      <tr><td class="label">Medical Insurance No</td><td class="value">{{medical_insurance_no}}</td></tr>
-    </table>
   </div>
+
+  <script>
+    function getParams() {
+      const hash = decodeURIComponent(location.hash.substr(1));
+      const params = {};
+      hash.split("&").forEach(pair => {
+        const [key, value] = pair.split("=");
+        params[key] = value || "";
+      });
+      return params;
+    }
+
+    const data = getParams();
+
+    for (const key in data) {
+      const el = document.getElementById(key);
+      if (el) el.textContent = data[key];
+      if (key === "photo" && data[key]) {
+        document.getElementById("photo").src = "photos/" + data[key];
+      }
+    }
+  </script>
 </body>
 </html>
