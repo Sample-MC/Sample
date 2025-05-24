@@ -1,44 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Employee Info Viewer</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emergency Card</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2em; }
-    #content {
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      max-width: 500px;
-    }
+    body { font-family: 'Arial', sans-serif; padding: 20px; max-width: 500px; margin: auto; }
+    .card { border: 1px solid #ccc; padding: 15px; border-radius: 8px; box-shadow: 0 0 10px #aaa; }
+    h1 { color: red; text-align: center; }
+    .section { margin-bottom: 20px; }
+    .title { background-color: #d32f2f; color: white; padding: 5px; font-weight: bold; }
+    .row { display: flex; border-bottom: 1px solid #ccc; }
+    .label { width: 50%; background: #f1f1f1; padding: 5px; font-weight: bold; }
+    .value { width: 50%; padding: 5px; }
+    img.photo { float: right; width: 100px; border: 2px solid #000; margin-left: 10px; }
   </style>
 </head>
 <body>
-  <h1>Employee Details</h1>
-  <div id="content">Loading...</div>
+  <h1>FUJITEC</h1>
+  <div class="card">
+    <div class="section">
+      <div class="title">STAFF EMERGENCY CARD</div>
+      <img id="photo" class="photo" src="" alt="Photo"/>
+      <div class="row"><div class="label">Name</div><div class="value" id="name"></div></div>
+      <div class="row"><div class="label">Age</div><div class="value" id="age"></div></div>
+      <div class="row"><div class="label">Designation</div><div class="value" id="designation"></div></div>
+      <div class="row"><div class="label">DOB</div><div class="value" id="dob"></div></div>
+      <div class="row"><div class="label">Gender</div><div class="value" id="gender"></div></div>
+      <div class="row"><div class="label">Contact no</div><div class="value" id="contact"></div></div>
+    </div>
 
-  <!-- Load your employee data -->
-  <script src="data.js"></script>
+    <div class="section">
+      <div class="title">EMERGENCY CONTACT</div>
+      <div class="row"><div class="label">Emergency Contact No</div><div class="value" id="emergency_contact"></div></div>
+      <div class="row"><div class="label">Relationship to Employee</div><div class="value" id="relationship"></div></div>
+      <div class="row"><div class="label">Company Address</div><div class="value" id="company_address"></div></div>
+      <div class="row"><div class="label">Residential Address</div><div class="value" id="residential_address"></div></div>
+    </div>
+
+    <div class="section">
+      <div class="title">MEDICAL CONCERNS</div>
+      <div class="row"><div class="label">Blood Group</div><div class="value" id="blood_group"></div></div>
+      <div class="row"><div class="label">Medical Insurance No</div><div class="value" id="insurance"></div></div>
+    </div>
+  </div>
 
   <script>
-    const empId = window.location.hash.substring(1);
-    const content = document.getElementById('content');
+    const params = new URLSearchParams(window.location.hash.slice(1));
+    const get = key => decodeURIComponent(params.get(key) || '');
 
-    if (!empId) {
-      content.innerText = "No employee ID provided.";
-    } else {
-      const emp = employeeData.find(e => e["EMP ID"] === empId);
-      if (emp) {
-        content.innerHTML = `
-          <p><strong>EMP ID:</strong> ${emp["EMP ID"]}</p>
-          <p><strong>Name:</strong> ${emp["Name"]}</p>
-          <p><strong>Phone:</strong> ${emp["Phone"]}</p>
-          <p><strong>Emergency Contact:</strong> ${emp["Emergency Contact"]}</p>
-        `;
-      } else {
-        content.innerText = "Employee not found.";
-      }
-    }
+    document.getElementById('name').textContent = get('name');
+    document.getElementById('age').textContent = get('age');
+    document.getElementById('designation').textContent = get('designation');
+    document.getElementById('dob').textContent = get('dob');
+    document.getElementById('gender').textContent = get('gender');
+    document.getElementById('contact').textContent = get('contact');
+    document.getElementById('emergency_contact').textContent = get('emergency_contact');
+    document.getElementById('relationship').textContent = get('relationship');
+    document.getElementById('company_address').textContent = get('company_address');
+    document.getElementById('residential_address').textContent = get('residential_address');
+    document.getElementById('blood_group').textContent = get('blood_group');
+    document.getElementById('insurance').textContent = get('insurance');
+
+    const photoFile = get('photo');
+    if (photoFile) document.getElementById('photo').src = `photos/${photoFile}`;
   </script>
 </body>
 </html>
