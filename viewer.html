@@ -1,49 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Emergency Medical Card</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
-    }
-    .card {
-      width: 700px;
-      margin: auto;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 30px;
-      overflow: hidden;
-    }
-    .card h2 {
-      text-align: center;
-    }
-    .photo {
-      float: right;
-      width: 120px;
-      height: 120px;
-      border: 2px solid #ccc;
-      object-fit: cover;
-      margin-left: 20px;
-    }
-    .details {
-      line-height: 1.6;
-    }
-    .label {
-      font-weight: bold;
-    }
-    .row {
-      margin-bottom: 10px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>Emergency Medical Card</title>
+<style>
+  body { font-family: Arial, sans-serif; background:#f0f0f0; padding:20px; }
+  .card { width:700px; margin:auto; background:#fff; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1); padding:30px; }
+  .card h2 { text-align:center; }
+  .photo { float:right; width:120px; height:120px; border:2px solid #ccc; object-fit:cover; }
+  .details { line-height:1.6; }
+  .label { font-weight:bold; }
+  .row { margin-bottom:10px; }
+</style>
 </head>
 <body>
   <div class="card">
     <h2>Emergency Medical Card</h2>
-    <img id="photo" class="photo" src="photos/default.jpg" alt="Photo" onerror="this.src='photos/default.jpg'" />
+    <img id="photo" class="photo" src="" alt="Photo" />
     <div class="details">
       <div class="row"><span class="label">Name:</span> <span id="name"></span></div>
       <div class="row"><span class="label">Age:</span> <span id="age"></span></div>
@@ -66,12 +39,13 @@
       const params = {};
       hash.split("&").forEach(pair => {
         const [key, value] = pair.split("=");
-        params[key] = value;
+        params[key] = value || "";
       });
       return params;
     }
 
     const data = getParams();
+
     for (const key in data) {
       const el = document.getElementById(key);
       if (el) el.textContent = data[key];
