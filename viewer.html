@@ -68,7 +68,7 @@
   </style>
 </head>
 <body>
-  <div class="card">
+  <div class="card" id="card" style="display:none;">
     <div class="header">
       <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
       <img id="photo" class="photo" src="" alt="Employee Photo" />
@@ -99,31 +99,49 @@
     </table>
   </div>
 
+  <div id="error" style="max-width: 800px; margin:auto; color:red; text-align:center; display:none;">
+    <h3>Employee data not found.</h3>
+  </div>
+
+  <script src="data.js"></script>
   <script>
-    const params = new URLSearchParams(decodeURIComponent(location.hash.slice(1)));
-    try {
-      const json = JSON.parse(params.keys().next().value);
-      const data = typeof json === "string" ? JSON.parse(json) : json;
+    function showEmployeeData(empId) {
+      const data = employeeData[empId];
+      if (!data) {
+        document.getElementById("card").style.display = "none";
+        document.getElementById("error").style.display = "block";
+        return;
+      }
+      document.getElementById("card").style.display = "block";
+      document.getElementById("error").style.display = "none";
 
-      const map = {
-        n: "name", a: "age", d: "designation", b: "dob", g: "gender", c: "contact",
-        e: "emergency_contact", r: "relationship", ca: "company_address", ra: "residential_address",
-        bg: "blood_group", i: "insurance", p: "photo"
-      };
+      document.getElementById("photo").src = data.photo || "";
+      document.getElementById("name").textContent = data.name || "Not Provided";
+      document.getElementById("age").textContent = data.age || "Not Provided";
+      document.getElementById("designation").textContent = data.designation || "Not Provided";
+      document.getElementById("dob").textContent = data.dob || "Not Provided";
+      document.getElementById("gender").textContent = data.gender || "Not Provided";
+      document.getElementById("contact").textContent = data.contact || "Not Provided";
 
-      Object.keys(map).forEach(k => {
-        const id = map[k];
-        const val = data[k] || "Not Provided";
-        if (k === "p") {
-          document.getElementById("photo").src = val;
-        } else {
-          const el = document.getElementById(id);
-          if (el) el.textContent = val;
-        }
-      });
-    } catch (err) {
-      alert("Failed to load employee data.");
+      document.getElementById("emergency_contact").textContent = data.emergency_contact || "Not Provided";
+      document.getElementById("relationship").textContent = data.relationship || "Not Provided";
+      document.getElementById("company_address").textContent = data.company_address || "Not Provided";
+      document.getElementById("residential_address").textContent = data.residential_address || "Not Provided";
+
+      document.getElementById("blood_group").textContent = data.blood_group || "Not Provided";
+      document.getElementById("insurance").textContent = data.insurance || "Not Provided";
     }
+
+    // Read the empId from URL hash (e.g. #emp001)
+    window.onload = () => {
+      const empId = location.hash.slice(1);
+      if (!empId) {
+        document.getElementById("card").style.display = "none";
+        document.getElementById("error").style.display = "block";
+        return;
+      }
+      showEmployeeData(empId);
+    };
   </script>
 </body>
 </html>
