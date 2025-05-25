@@ -25,16 +25,22 @@
       align-items: center;
       flex-wrap: wrap;
     }
+    .logo-container {
+      flex: 1;
+      min-width: 150px;
+    }
+    .photo-container {
+      flex-shrink: 0;
+    }
     .header img.logo {
       height: 40px;
-      margin-bottom: 10px;
     }
     .header img.photo {
       height: 120px;
       width: 100px;
       object-fit: cover;
       border: 2px solid #000;
-      margin-top: 10px;
+      margin-left: auto;
     }
     h2 {
       background: #c00;
@@ -60,22 +66,27 @@
       font-weight: bold;
       width: 40%;
     }
-    .header img {
-      width: 120px;
-    }
 
     /* Responsive Styles */
     @media (max-width: 600px) {
       .header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+      }
+      .logo-container {
+        align-self: flex-start;
+        margin-bottom: 10px;
+      }
+      .photo-container {
+        align-self: flex-end;
+        margin-top: 10px;
       }
       .header img.logo {
         height: 30px;
       }
       .header img.photo {
-        align-self: center;
-        margin-top: 15px;
+        height: 100px;
+        width: 80px;
       }
       h2 {
         font-size: 16px;
@@ -89,8 +100,12 @@
 <body>
   <div class="card">
     <div class="header">
-      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo">
-      <img id="photo" class="photo" src="" alt="Photo" />
+      <div class="logo-container">
+        <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
+      </div>
+      <div class="photo-container">
+        <img id="photo" class="photo" src="" alt="Photo" />
+      </div>
     </div>
 
     <h2>STAFF EMERGENCY CARD</h2>
