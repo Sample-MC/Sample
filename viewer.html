@@ -2,98 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Emergency Medical Card</title>
+  <title>Staff Emergency Card - Fujitec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f0f0;
+      padding: 10px;
     }
-
     .card {
-      max-width: 700px;
+      max-width: 800px;
+      background: #fff;
       margin: auto;
-      background: white;
-      border: 1px solid #ccc;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      overflow: hidden;
       padding: 20px;
     }
-
-    header {
+    .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
-
-    .logo {
-      width: 150px;
+    .header img.logo {
+      height: 40px;
+      margin-bottom: 10px;
     }
-
-    .profile {
-      width: 100px;
+    .header img.photo {
       height: 120px;
+      width: 100px;
       object-fit: cover;
-      border: 1px solid #000;
+      border: 2px solid #000;
+      margin-top: 10px;
     }
-
     h2 {
-      background: #d0101b;
-      color: white;
-      padding: 8px;
-      margin-top: 20px;
-      font-size: 1.1em;
+      background: #c00;
+      color: #fff;
+      text-align: center;
+      margin: 20px 0 10px;
+      padding: 10px 0;
+      font-size: 18px;
     }
-
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 8px;
+      margin-bottom: 20px;
+    }
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      vertical-align: top;
+      word-break: break-word;
+    }
+    td.label {
+      background: #f4f4f4;
+      font-weight: bold;
+      width: 40%;
     }
 
-    td {
-      border: 1px solid #aaa;
-      padding: 8px;
-      vertical-align: top;
-      font-size: 14px;
-      width: 50%;
+    /* Responsive Styles */
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header img.logo {
+        height: 30px;
+      }
+      .header img.photo {
+        align-self: center;
+        margin-top: 15px;
+      }
+      h2 {
+        font-size: 16px;
+      }
+      td, td.label {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <header>
-      <img src="fujitec-logo.png" alt="Fujitec Logo" class="logo" />
-      <img id="photo" class="profile" src="" alt="Employee Photo" />
-    </header>
+    <div class="header">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Fujitec_Logo.svg/2560px-Fujitec_Logo.svg.png" alt="Fujitec Logo" class="logo" />
+      <img id="photo" class="photo" src="" alt="Photo" />
+    </div>
 
-    <section>
-      <h2>STAFF EMERGENCY CARD</h2>
-      <table>
-        <tr><td>Name</td><td id="name"></td></tr>
-        <tr><td>Age</td><td id="age"></td></tr>
-        <tr><td>Designation</td><td id="designation"></td></tr>
-        <tr><td>DOB</td><td id="dob"></td></tr>
-        <tr><td>Gender</td><td id="gender"></td></tr>
-        <tr><td>Contact No</td><td id="contact"></td></tr>
-      </table>
-    </section>
+    <h2>STAFF EMERGENCY CARD</h2>
+    <table>
+      <tr><td class="label">Name</td><td id="name"></td></tr>
+      <tr><td class="label">Age</td><td id="age"></td></tr>
+      <tr><td class="label">Designation</td><td id="designation"></td></tr>
+      <tr><td class="label">DOB :</td><td id="dob"></td></tr>
+      <tr><td class="label">Gender :</td><td id="gender"></td></tr>
+      <tr><td class="label">Contact no :</td><td id="contact"></td></tr>
+    </table>
 
-    <section>
-      <h2>EMERGENCY CONTACT</h2>
-      <table>
-        <tr><td>Emergency Contact No</td><td id="emergency_contact"></td></tr>
-        <tr><td>Relationship to Employee</td><td id="relationship"></td></tr>
-        <tr><td>Company Address</td><td id="company_address"></td></tr>
-        <tr><td>Residential Address</td><td id="residential_address"></td></tr>
-      </table>
-    </section>
+    <h2>EMERGENCY CONTACT</h2>
+    <table>
+      <tr><td class="label">Emergency Contact No :</td><td id="emergency_contact"></td></tr>
+      <tr><td class="label">Relationship to Employee :</td><td id="relationship"></td></tr>
+      <tr><td class="label">Company Address :</td><td id="company_address"></td></tr>
+      <tr><td class="label">Residential Address :</td><td id="residential_address"></td></tr>
+    </table>
 
-    <section>
-      <h2>MEDICAL CONCERNS</h2>
-      <table>
-        <tr><td>Blood Group</td><td id="blood_group"></td></tr>
-        <tr><td>Medical Insurance No</td><td id="insurance"></td></tr>
-      </table>
-    </section>
+    <h2>MEDICAL CONCERNS</h2>
+    <table>
+      <tr><td class="label">Blood Group :</td><td id="blood_group"></td></tr>
+      <tr><td class="label">Medical Insurance No :</td><td id="insurance"></td></tr>
+    </table>
   </div>
 
   <script>
@@ -108,6 +127,7 @@
     }
 
     const data = getParams();
+
     for (const key in data) {
       const el = document.getElementById(key);
       if (el) el.textContent = data[key];
