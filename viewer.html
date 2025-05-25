@@ -6,53 +6,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f0f0f0;
       padding: 10px;
     }
+
     .card {
       max-width: 800px;
+      background: #fff;
       margin: auto;
-      background: white;
       border-radius: 12px;
-      padding: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      overflow: hidden;
+      padding: 20px;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      flex-wrap: wrap;
     }
-    .logo-container img {
+
+    .logo-container {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .photo-container {
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .header img.logo {
       height: 40px;
     }
-    .photo-container img {
+
+    .header img.photo {
       height: 120px;
       width: 100px;
-      border: 2px solid black;
       object-fit: cover;
+      border: 2px solid #000;
     }
+
     h2 {
       background: #c00;
-      color: white;
+      color: #fff;
       text-align: center;
-      padding: 10px 0;
       margin: 20px 0 10px;
+      padding: 10px 0;
       font-size: 18px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-bottom: 20px;
     }
+
     td {
       border: 1px solid #ccc;
       padding: 10px;
       vertical-align: top;
+      word-break: break-word;
     }
+
     td.label {
-      background: #eee;
+      background: #f4f4f4;
       font-weight: bold;
       width: 40%;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        flex-direction: column;
+      }
+      .header img.photo {
+        height: 100px;
+        width: 80px;
+      }
     }
   </style>
 </head>
@@ -60,53 +92,60 @@
   <div class="card">
     <div class="header">
       <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo">
+        <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
       </div>
       <div class="photo-container">
-        <img id="photo" src="" alt="Photo">
+        <img id="photo" class="photo" src="" alt="Photo" />
       </div>
     </div>
 
     <h2>STAFF EMERGENCY CARD</h2>
     <table>
-      <tr><td class="label">Name</td><td id="n"></td></tr>
-      <tr><td class="label">Age</td><td id="a"></td></tr>
-      <tr><td class="label">Designation</td><td id="d"></td></tr>
+      <tr><td class="label">Name</td><td id="name"></td></tr>
+      <tr><td class="label">Age</td><td id="age"></td></tr>
+      <tr><td class="label">Designation</td><td id="designation"></td></tr>
       <tr><td class="label">DOB</td><td id="dob"></td></tr>
-      <tr><td class="label">Gender</td><td id="g"></td></tr>
-      <tr><td class="label">Contact No</td><td id="c"></td></tr>
+      <tr><td class="label">Gender</td><td id="gender"></td></tr>
+      <tr><td class="label">Contact no</td><td id="contact"></td></tr>
     </table>
 
     <h2>EMERGENCY CONTACT</h2>
     <table>
-      <tr><td class="label">Emergency Contact No</td><td id="ec"></td></tr>
-      <tr><td class="label">Relationship</td><td id="r"></td></tr>
-      <tr><td class="label">Company Address</td><td id="ca"></td></tr>
-      <tr><td class="label">Residential Address</td><td id="ra"></td></tr>
+      <tr><td class="label">Emergency Contact No</td><td id="emergency_contact"></td></tr>
+      <tr><td class="label">Relationship</td><td id="relationship"></td></tr>
+      <tr><td class="label">Company Address</td><td id="company_address"></td></tr>
+      <tr><td class="label">Residential Address</td><td id="residential_address"></td></tr>
     </table>
 
     <h2>MEDICAL CONCERNS</h2>
     <table>
-      <tr><td class="label">Blood Group</td><td id="b"></td></tr>
-      <tr><td class="label">Medical Insurance No</td><td id="i"></td></tr>
+      <tr><td class="label">Blood Group</td><td id="blood_group"></td></tr>
+      <tr><td class="label">Insurance No</td><td id="insurance"></td></tr>
     </table>
   </div>
 
   <script>
-    const raw = decodeURIComponent(location.hash.slice(1));
-    const data = {};
-    raw.split("&").forEach(pair => {
-      const [k, v] = pair.split("=");
-      if (k) data[k] = v || "";
-    });
+    const params = new URLSearchParams(decodeURIComponent(location.hash.slice(1)));
+    try {
+      const json = JSON.parse(params.keys().next().value); // Get the single encoded JSON key
+      const data = typeof json === "string" ? JSON.parse(json) : json;
 
-    for (const key in data) {
-      if (key === "p") {
-        document.getElementById("photo").src = "https://sample-mc.github.io/Sample/photos/" + data[key];
-      } else {
-        const el = document.getElementById(key);
-        if (el) el.textContent = data[key];
-      }
+      const keys = [
+        "name", "age", "designation", "dob", "gender", "contact",
+        "emergency_contact", "relationship", "company_address", "residential_address",
+        "blood_group", "insurance", "photo"
+      ];
+
+      keys.forEach(key => {
+        if (key === "photo") {
+          document.getElementById("photo").src = data[key];
+        } else {
+          const el = document.getElementById(key);
+          if (el) el.textContent = data[key] || "Not Provided";
+        }
+      });
+    } catch (err) {
+      alert("Error parsing QR code data. Please ensure it's valid.");
     }
   </script>
 </body>
