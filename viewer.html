@@ -10,6 +10,7 @@
       background: #f0f0f0;
       padding: 10px;
     }
+
     .card {
       max-width: 800px;
       background: #fff;
@@ -19,29 +20,35 @@
       overflow: hidden;
       padding: 20px;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       flex-wrap: wrap;
     }
+
     .logo-container {
       flex: 1;
       min-width: 150px;
     }
+
     .photo-container {
       flex-shrink: 0;
+      margin-left: auto;
     }
+
     .header img.logo {
       height: 40px;
     }
+
     .header img.photo {
       height: 120px;
       width: 100px;
       object-fit: cover;
       border: 2px solid #000;
-      margin-left: auto;
     }
+
     h2 {
       background: #c00;
       color: #fff;
@@ -50,17 +57,20 @@
       padding: 10px 0;
       font-size: 18px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 20px;
     }
+
     td {
       border: 1px solid #ccc;
       padding: 10px;
       vertical-align: top;
       word-break: break-word;
     }
+
     td.label {
       background: #f4f4f4;
       font-weight: bold;
@@ -73,24 +83,31 @@
         flex-direction: column;
         align-items: stretch;
       }
+
       .logo-container {
         align-self: flex-start;
         margin-bottom: 10px;
       }
+
       .photo-container {
         align-self: flex-end;
         margin-top: 10px;
+        text-align: right;
       }
+
       .header img.logo {
         height: 30px;
       }
+
       .header img.photo {
         height: 100px;
         width: 80px;
       }
+
       h2 {
         font-size: 16px;
       }
+
       td, td.label {
         font-size: 14px;
       }
