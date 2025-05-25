@@ -4,21 +4,28 @@
   <meta charset="UTF-8" />
   <title>Staff Emergency Card - Fujitec</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <style>
+  <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f0f0f0;
-      padding: 20px;
+      padding: 10px;
     }
 
     .card {
-      max-width: 600px;
+      max-width: 800px;
+      background: #fff;
       margin: auto;
-      border: 2px solid #000;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      overflow: hidden;
       padding: 20px;
     }
-    .header img {
-      width: 120px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     .logo-container {
@@ -32,15 +39,14 @@
     }
 
     .header img.logo {
-      width: 120px;
+      height: 40px;
     }
 
     .header img.photo {
-      float: right;
-      width: 80px;
-      height: 100px;
+      height: 120px;
+      width: 100px;
       object-fit: cover;
-      border: 1px solid #000;
+      border: 2px solid #000;
     }
 
     h2 {
@@ -50,7 +56,6 @@
       margin: 20px 0 10px;
       padding: 10px 0;
       font-size: 18px;
-      font-weight: bold;
     }
 
     table {
@@ -90,7 +95,7 @@
       }
 
       .header img.logo {
-        height: 40px;
+        height: 30px;
       }
 
       .header img.photo {
@@ -99,17 +104,17 @@
       }
 
       h2 {
-        font-size: 14px;
+        font-size: 16px;
       }
 
       td, td.label {
-        font-size: 12px;
+        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
- <!-- <div class="card">
+  <div class="card">
     <div class="header">
       <div class="logo-container">
         <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
@@ -117,11 +122,6 @@
       <div class="photo-container">
         <img id="photo" class="photo" src="" alt="Photo" />
       </div>
-    </div>-->
-  <div class="card">
-    <div class="header">
-      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo">
-      <img id="photo" src="" class="photo" alt="Photo" />
     </div>
 
     <h2>STAFF EMERGENCY CARD</h2>
