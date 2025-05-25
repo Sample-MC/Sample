@@ -19,7 +19,6 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.15);
       overflow: hidden;
       padding: 20px;
-      font-weight: bold;
     }
 
     .header {
@@ -27,26 +26,24 @@
       justify-content: space-between;
       align-items: flex-start;
       flex-wrap: wrap;
-      margin-bottom: 10px;
     }
 
-    .title-container {
-      flex: 2;
-      min-width: 250px;
-    }
-
-    .media-container {
+    .logo-container {
       flex: 1;
-      text-align: right;
+      min-width: 150px;
+    }
+
+    .photo-container {
+      flex-shrink: 0;
+      margin-left: auto;
     }
 
     .header img.logo {
-      height: 40px;
-      margin-bottom: 10px;
+      height: 100px;
     }
 
     .header img.photo {
-      height: 120px;
+      height: 100px;
       width: 100px;
       object-fit: cover;
       border: 2px solid #000;
@@ -59,6 +56,7 @@
       margin: 20px 0 10px;
       padding: 10px 0;
       font-size: 18px;
+      font-weight: bold;
     }
 
     table {
@@ -80,23 +78,25 @@
       width: 40%;
     }
 
-    /* Responsive Styles */
     @media (max-width: 600px) {
       .header {
         flex-direction: column;
         align-items: stretch;
       }
 
-      .title-container {
+      .logo-container {
+        align-self: flex-start;
         margin-bottom: 10px;
       }
 
-      .media-container {
-        text-align: center;
+      .photo-container {
+        align-self: flex-end;
+        margin-top: 10px;
+        text-align: right;
       }
 
       .header img.logo {
-        height: 30px;
+        height: 100px;
       }
 
       .header img.photo {
@@ -105,12 +105,11 @@
       }
 
       h2 {
-        font-size: 16px;
+        font-size: 14px;
       }
 
       td, td.label {
-        font-size: 14px;
-        font-weight: bold;
+        font-size: 12px;
       }
     }
   </style>
@@ -118,23 +117,23 @@
 <body>
   <div class="card">
     <div class="header">
-      <div class="title-container">
-        <h2>STAFF EMERGENCY CARD</h2>
-        <table>
-          <tr><td class="label">Name</td><td id="name"></td></tr>
-          <tr><td class="label">Age</td><td id="age"></td></tr>
-          <tr><td class="label">Designation</td><td id="designation"></td></tr>
-          <tr><td class="label">DOB :</td><td id="dob"></td></tr>
-          <tr><td class="label">Gender :</td><td id="gender"></td></tr>
-          <tr><td class="label">Contact no :</td><td id="contact"></td></tr>
-        </table>
-      </div>
-      <div class="media-container">
+      <div class="logo-container">
         <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
-        <br />
+      </div>
+      <div class="photo-container">
         <img id="photo" class="photo" src="" alt="Photo" />
       </div>
     </div>
+
+    <h2>STAFF EMERGENCY CARD</h2>
+    <table>
+      <tr><td class="label">Name</td><td id="name"></td></tr>
+      <tr><td class="label">Age</td><td id="age"></td></tr>
+      <tr><td class="label">Designation</td><td id="designation"></td></tr>
+      <tr><td class="label">DOB :</td><td id="dob"></td></tr>
+      <tr><td class="label">Gender :</td><td id="gender"></td></tr>
+      <tr><td class="label">Contact no :</td><td id="contact"></td></tr>
+    </table>
 
     <h2>EMERGENCY CONTACT</h2>
     <table>
@@ -153,23 +152,34 @@
 
   <script>
     function getParams() {
-      const hash = decodeURIComponent(location.hash.substr(1));
+      const hash = decodeURIComponent(location.hash.substring(1));
       const params = {};
       hash.split("&").forEach(pair => {
         const [key, value] = pair.split("=");
-        params[key] = value || "";
+        if (key) {
+          params[key] = value || "";
+        }
       });
       return params;
     }
 
     const data = getParams();
 
-    for (const key in data) {
+    const fields = [
+      "name", "age", "designation", "dob", "gender", "contact",
+      "emergency_contact", "relationship", "company_address", "residential_address",
+      "blood_group", "insurance"
+    ];
+
+    fields.forEach(key => {
       const el = document.getElementById(key);
-      if (el) el.textContent = data[key];
-      if (key === "photo" && data[key]) {
-        document.getElementById("photo").src = "photos/" + data[key];
+      if (el) {
+        el.textContent = data[key] ? data[key] : "Not Provided";
       }
+    });
+
+    if (data["photo"]) {
+      document.getElementById("photo").src = "photos/" + data["photo"];
     }
   </script>
 </body>
