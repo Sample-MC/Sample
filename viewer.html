@@ -177,9 +177,10 @@
       }
     });
 
-    if (data["photo"]) {
-      document.getElementById("photo").src = "photos/" + data["photo"];
-    }
+    if (key === "photo" && data[key]) {
+  document.getElementById("photo").src = "https://sample-mc.github.io/Sample/photos/" + data[key];
+}
+
   </script>
 </body>
 </html>
