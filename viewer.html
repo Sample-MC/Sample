@@ -104,18 +104,21 @@
     try {
       const json = JSON.parse(params.keys().next().value);
       const data = typeof json === "string" ? JSON.parse(json) : json;
-      const keys = [
-        "name", "age", "designation", "dob", "gender", "contact",
-        "emergency_contact", "relationship", "company_address", "residential_address",
-        "blood_group", "insurance", "photo"
-      ];
 
-      keys.forEach(key => {
-        if (key === "photo") {
-          document.getElementById("photo").src = data[key];
+      const map = {
+        n: "name", a: "age", d: "designation", b: "dob", g: "gender", c: "contact",
+        e: "emergency_contact", r: "relationship", ca: "company_address", ra: "residential_address",
+        bg: "blood_group", i: "insurance", p: "photo"
+      };
+
+      Object.keys(map).forEach(k => {
+        const id = map[k];
+        const val = data[k] || "Not Provided";
+        if (k === "p") {
+          document.getElementById("photo").src = val;
         } else {
-          const el = document.getElementById(key);
-          if (el) el.textContent = data[key] || "Not Provided";
+          const el = document.getElementById(id);
+          if (el) el.textContent = val;
         }
       });
     } catch (err) {
