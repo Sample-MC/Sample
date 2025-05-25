@@ -26,20 +26,22 @@
       justify-content: space-between;
       align-items: flex-start;
       flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
-    .logo-container {
+    .title-container {
+      flex: 2;
+      min-width: 250px;
+    }
+
+    .media-container {
       flex: 1;
-      min-width: 150px;
-    }
-
-    .photo-container {
-      flex-shrink: 0;
-      margin-left: auto;
+      text-align: right;
     }
 
     .header img.logo {
       height: 40px;
+      margin-bottom: 10px;
     }
 
     .header img.photo {
@@ -84,15 +86,12 @@
         align-items: stretch;
       }
 
-      .logo-container {
-        align-self: flex-start;
+      .title-container {
         margin-bottom: 10px;
       }
 
-      .photo-container {
-        align-self: flex-end;
-        margin-top: 10px;
-        text-align: right;
+      .media-container {
+        text-align: center;
       }
 
       .header img.logo {
@@ -110,6 +109,7 @@
 
       td, td.label {
         font-size: 14px;
+        font-weight: bold;
       }
     }
   </style>
@@ -117,23 +117,23 @@
 <body>
   <div class="card">
     <div class="header">
-      <div class="logo-container">
-        <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
+      <div class="title-container">
+        <h2>STAFF EMERGENCY CARD</h2>
+        <table>
+          <tr><td class="label">Name</td><td id="name"></td></tr>
+          <tr><td class="label">Age</td><td id="age"></td></tr>
+          <tr><td class="label">Designation</td><td id="designation"></td></tr>
+          <tr><td class="label">DOB :</td><td id="dob"></td></tr>
+          <tr><td class="label">Gender :</td><td id="gender"></td></tr>
+          <tr><td class="label">Contact no :</td><td id="contact"></td></tr>
+        </table>
       </div>
-      <div class="photo-container">
+      <div class="media-container">
+        <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
+        <br />
         <img id="photo" class="photo" src="" alt="Photo" />
       </div>
     </div>
-
-    <h2>STAFF EMERGENCY CARD</h2>
-    <table>
-      <tr><td class="label">Name</td><td id="name"></td></tr>
-      <tr><td class="label">Age</td><td id="age"></td></tr>
-      <tr><td class="label">Designation</td><td id="designation"></td></tr>
-      <tr><td class="label">DOB :</td><td id="dob"></td></tr>
-      <tr><td class="label">Gender :</td><td id="gender"></td></tr>
-      <tr><td class="label">Contact no :</td><td id="contact"></td></tr>
-    </table>
 
     <h2>EMERGENCY CONTACT</h2>
     <table>
