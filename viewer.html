@@ -1,128 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Staff Emergency Card</title>
+  <meta charset="UTF-8" />
+  <title>Staff Emergency Card - Fujitec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f0f0;
       padding: 10px;
-      background: #f5f5f5;
     }
+
     .card {
-      width: 380px;
+      max-width: 800px;
       background: #fff;
-      padding: 20px;
-      border: 2px solid #ccc;
       margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      overflow: hidden;
+      padding: 20px;
     }
-    .logo {
-      text-align: center;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .photo {
-      float: right;
-      width: 90px;
-      height: 110px;
+
+    .header img.logo {
+      height: 40px;
+    }
+
+    .header img.photo {
+      height: 120px;
+      width: 100px;
       object-fit: cover;
-      border: 1px solid #000;
+      border: 2px solid #000;
     }
+
     h2 {
       background: #c00;
       color: #fff;
-      padding: 5px;
       text-align: center;
+      margin: 20px 0 10px;
+      padding: 10px 0;
+      font-size: 18px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
+
     td {
-      border: 1px solid #000;
-      padding: 4px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      vertical-align: top;
+      word-break: break-word;
     }
-    .section-title {
-      background: #c00;
-      color: #fff;
-      text-align: center;
-      padding: 5px;
-    }
-    .clear {
-      clear: both;
+
+    td.label {
+      background: #f4f4f4;
+      font-weight: bold;
+      width: 40%;
     }
   </style>
 </head>
 <body>
+  <div class="card">
+    <div class="header">
+      <img src="https://raw.githubusercontent.com/Sample-MC/Sample/main/fujitec-logo.png" alt="Logo" class="logo" />
+      <img id="photo" class="photo" src="" alt="Employee Photo" />
+    </div>
 
-<div class="card" id="card"></div>
-
-<script>
-const employees = {
-  "002": {
-    name: "Sushil Kumar",
-    age: 33,
-    designation: "Deputy Safety Manager",
-    dob: "14-11-1991",
-    gender: "Male",
-    contact: "7339395251",
-    emergencyContact: "6374276596",
-    relationship: "Wife",
-    companyAddress: "Plot No-52, Kanchipuram, 1st Cross St, Mahindra World City, 8th Avenue, Anjur R.F., Tamil Nadu- 603002",
-    residentialAddress: "49G/3A, Pallikoodathan Street, Kanchipuram - 631501",
-    bloodGroup: "O+ve",
-    insuranceNo: "IL22411950300",
-    photo: "emp_002.png"
-  },
-  "003": {
-    name: "Another Employee",
-    age: 29,
-    designation: "Technician",
-    dob: "01-01-1995",
-    gender: "Male",
-    contact: "9000000000",
-    emergencyContact: "9888888888",
-    relationship: "Father",
-    companyAddress: "Company XYZ Address",
-    residentialAddress: "Home XYZ Address",
-    bloodGroup: "A+ve",
-    insuranceNo: "AB1234567890",
-    photo: "emp_003.png"
-  }
-};
-
-const empId = location.hash.slice(1);
-const data = employees[empId];
-
-if (data) {
-  document.getElementById('card').innerHTML = `
-    <div class="logo"><img src="https://yourusername.github.io/yourrepo/fujitec-logo.png" height="40"></div>
     <h2>STAFF EMERGENCY CARD</h2>
-    <img class="photo" src="photos/${data.photo}">
     <table>
-      <tr><td><b>Name</b></td><td>${data.name}</td></tr>
-      <tr><td><b>Age</b></td><td>${data.age}</td></tr>
-      <tr><td><b>Designation</b></td><td>${data.designation}</td></tr>
-      <tr><td><b>DOB</b></td><td>${data.dob}</td></tr>
-      <tr><td><b>Gender</b></td><td>${data.gender}</td></tr>
-      <tr><td><b>Contact No</b></td><td>${data.contact}</td></tr>
+      <tr><td class="label">Name</td><td id="name"></td></tr>
+      <tr><td class="label">Age</td><td id="age"></td></tr>
+      <tr><td class="label">Designation</td><td id="designation"></td></tr>
+      <tr><td class="label">DOB</td><td id="dob"></td></tr>
+      <tr><td class="label">Gender</td><td id="gender"></td></tr>
+      <tr><td class="label">Contact no</td><td id="contact"></td></tr>
     </table>
+
     <h2>EMERGENCY CONTACT</h2>
     <table>
-      <tr><td><b>Emergency Contact No</b></td><td>${data.emergencyContact}</td></tr>
-      <tr><td><b>Relationship</b></td><td>${data.relationship}</td></tr>
-      <tr><td><b>Company Address</b></td><td>${data.companyAddress}</td></tr>
-      <tr><td><b>Residential Address</b></td><td>${data.residentialAddress}</td></tr>
+      <tr><td class="label">Emergency Contact No</td><td id="emergency_contact"></td></tr>
+      <tr><td class="label">Relationship</td><td id="relationship"></td></tr>
+      <tr><td class="label">Company Address</td><td id="company_address"></td></tr>
+      <tr><td class="label">Residential Address</td><td id="residential_address"></td></tr>
     </table>
+
     <h2>MEDICAL CONCERNS</h2>
     <table>
-      <tr><td><b>Blood Group</b></td><td>${data.bloodGroup}</td></tr>
-      <tr><td><b>Medical Insurance No</b></td><td>${data.insuranceNo}</td></tr>
+      <tr><td class="label">Blood Group</td><td id="blood_group"></td></tr>
+      <tr><td class="label">Insurance No</td><td id="insurance"></td></tr>
     </table>
-    <div class="clear"></div>
-  `;
-} else {
-  document.getElementById('card').innerHTML = "<p>No employee data found for ID: " + empId + "</p>";
-}
-</script>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(decodeURIComponent(location.hash.slice(1)));
+    try {
+      const json = JSON.parse(params.keys().next().value);
+      const data = typeof json === "string" ? JSON.parse(json) : json;
+      const keys = [
+        "name", "age", "designation", "dob", "gender", "contact",
+        "emergency_contact", "relationship", "company_address", "residential_address",
+        "blood_group", "insurance", "photo"
+      ];
+
+      keys.forEach(key => {
+        if (key === "photo") {
+          document.getElementById("photo").src = data[key];
+        } else {
+          const el = document.getElementById(key);
+          if (el) el.textContent = data[key] || "Not Provided";
+        }
+      });
+    } catch (err) {
+      alert("Failed to load employee data.");
+    }
+  </script>
 </body>
 </html>
